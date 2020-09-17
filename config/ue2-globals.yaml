@@ -1,6 +1,0 @@
-namespace: tzl
-region: us-east-2
-region_availability_zones: ["us-east-2a", "us-east-2b", "us-east-2c"]
-environment: ue2
-
-subnet_type_tag_key: "tzlsvc.net/subnet/type"
