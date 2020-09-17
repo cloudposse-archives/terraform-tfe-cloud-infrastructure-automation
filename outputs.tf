@@ -1,14 +1,44 @@
-output "id" {
-  description = "ID of the created example"
-  value       = module.this.enabled ? module.this.id : null
+// output "workspace_configuration" {
+//   value = module.workspace.*.workspace_configuration
+// }
+
+// output "top_level_external_ids" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].top_level_external_id }
+// }
+
+// output "top_level_ids" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].top_level_id }
+// }
+
+// output "sub_project_external_ids" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].sub_project_external_id }
+// }
+
+// output "globals_configuration" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].globals_configuration }
+// }
+
+// output "projects_configuration" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].projects_configuration}
+// }
+
+
+output "workspace_ids" {
+   value = local.workspace_ids
 }
 
-output "example" {
-  description = "Example output"
-  value       = module.this.enabled ? local.example : null
+output "workspace_globals" {
+   value = local.workspace_globals
 }
 
-output "random" {
-  description = "Stable random number for this example"
-  value       = module.this.enabled ? join("", random_integer.example[*].result) : null
+output "workspace_variables" {
+   value = local.workspace_variables
 }
+
+output "workspace_triggers" {
+   value = local.workspace_triggers
+}
+
+// output "workspace_configuration" {
+//    value = { for p in local.infrastructure_files : p => module.tfc_workspace[p].workspace_configuration }
+// }

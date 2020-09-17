@@ -1,0 +1,20 @@
+projects:
+  globals:
+    stage: prd
+    account_number: "205408242674"
+
+  terraform:
+    account-settings:
+      vars: {}
+
+    cloudtrail:
+      vars: {}
+
+    dns-delegated:
+      vars:
+        zone_config:
+          - subdomain: prd
+            zone_name: gbl.tzlsvc.net
+              
+    iam-delegated-roles:
+      vars: {}

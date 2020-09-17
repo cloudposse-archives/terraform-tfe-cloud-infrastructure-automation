@@ -1,0 +1,21 @@
+projects:
+  globals:
+    stage: stg
+    account_number: "743447163009"
+
+  terraform:
+    account-settings:
+      vars: {}
+
+
+    cloudtrail:
+      vars: {}
+
+    dns-delegated:
+      vars:
+        zone_config:
+          - subdomain: stg
+            zone_name: gbl.tzlsvc.net
+
+    iam-delegated-roles:
+      vars: {}

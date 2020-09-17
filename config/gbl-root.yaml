@@ -1,0 +1,60 @@
+projects:
+  globals:
+    stage: root
+    account_number: "103847632801"
+
+  terraform:
+    account:
+      vars:
+        account_email: "aws+%s@tanzle.com"
+
+        account_iam_user_access_to_billing: "DENY"
+
+        aws_service_access_principals:
+        - "cloudtrail.amazonaws.com"
+        - "ram.amazonaws.com"
+
+        # List of names of accounts to create to be used internally to host EKS (Kubernetes) clusters
+        corp_eks_accounts:
+        - "auto"
+        - "dev"
+        - "prd"
+        - "sbx"
+        - "stg"
+        - "tools"
+
+        # List of names of accounts to create to be used internally without EKS (Kubernetes) clusters
+        corp_non_eks_accounts:
+        - "audit"
+        - "dns"
+        - "identity"
+        - "security"
+        - "network"
+
+        enabled_policy_types:
+        - "SERVICE_CONTROL_POLICY"
+        - "TAG_POLICY"
+
+    account-map:
+      vars:
+        root_account_aws_name: "Tanzle Root"
+
+    account-settings:
+      vars: {}
+
+    cloudtrail:
+      vars: {}
+
+    iam-delegated-roles:
+      vars:
+        exclude_roles: ["poweruser", "helm"]
+        account_role_policy_arns:
+          # IAM Policy ARNs to attach to each role, overriding the defaults
+          ops: ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+          observer: ["arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"]
+          terraform: ["root-terraform"]
+
+        trusted_primary_role_overrides:
+          # "Observers" and "Power Users" are really not that trusted,
+          # so we do not even allow them into the observer role
+          observer: ["admin", "ops"]

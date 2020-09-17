@@ -1,0 +1,15 @@
+projects:
+  globals:
+    stage: security
+    account_number: "556816285060"
+
+  terraform:
+    account-settings:
+      vars: {}
+
+    cloudtrail:
+      vars: {}
+
+    iam-delegated-roles:
+      vars:
+        exclude_roles: ["helm"]

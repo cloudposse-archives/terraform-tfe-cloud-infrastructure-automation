@@ -1,0 +1,13 @@
+projects:
+  globals:
+    stage: dev
+    account_number: "852653222113"
+
+  terraform:
+    vpc:
+      vars:
+        cidr_block: "10.108.64.0/18"
+        nat_gateway_enabled: false
+        nat_instance_enabled: true
+        nat_instance_type: "t3.micro"
+        availability_zones: ["us-east-2a", "us-east-2b", "us-east-2c"]

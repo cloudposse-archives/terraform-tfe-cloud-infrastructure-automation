@@ -1,0 +1,21 @@
+projects:
+  globals:
+    stage: tools
+    account_number: "083013431750"
+
+  terraform:
+    account-settings:
+      vars: {}
+
+
+    cloudtrail:
+      vars: {}
+
+    dns-delegated:
+      vars:
+        zone_config:
+          - subdomain: tools
+            zone_name: gbl.tzlsvc.net
+
+    iam-delegated-roles:
+      vars: {}

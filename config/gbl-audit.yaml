@@ -1,0 +1,26 @@
+projects:
+  globals:
+    stage: audit
+    account_number: "404967144133"
+
+  terraform:
+    account-settings:
+      vars: {}
+
+    cloudtrail:
+      vars: {}
+
+    iam-delegated-roles:
+      vars:
+        exclude_roles: ["helm"]
+        account_role_policy_arns:
+          # IAM Policy ARNs to attach to each role, overriding the defaults
+          admin: ["arn:aws:iam::aws:policy/PowerUserAccess"]
+          ops: ["arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"]
+          poweruser: ["arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"]
+          observer: ["arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"]
+          # Use default for terraform
+
+        trusted_primary_role_overrides:
+          # Terraform in audit can wipe out logs, so access to it needs to be restricted
+          terraform: ["admin"]

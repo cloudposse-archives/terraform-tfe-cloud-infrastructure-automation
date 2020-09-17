@@ -1,0 +1,11 @@
+projects:
+  globals:
+    stage: root
+
+  terraform:
+    tfstate-backend:
+      vars:
+        name: tfstate
+        force_destroy: false
+        prevent_unencrypted_uploads: true
+        enable_server_side_encryption: true

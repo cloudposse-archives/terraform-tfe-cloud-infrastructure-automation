@@ -1,4 +1,6 @@
-variable "example" {
-  description = "Example variable"
-  default     = "hello world"
+variable token {
+    
 }
+
+variable organization {
+}    

@@ -1,0 +1,108 @@
+projects:
+  globals:
+    stage: dev
+    account_number: "852653222113"
+
+  terraform:
+    aurora-postgres:
+      command: "/usr/bin/terraform-0.13"
+      vars:
+        instance_type: db.r4.large
+        cluster_size: 1
+
+    dns-delegated:
+      vars:
+        zone_config:
+        - subdomain: dev
+          zone_name: uw2.tzlsvc.net
+
+    eks:
+      command: "/usr/bin/terraform-0.13"
+      triggers:
+        - gbl-dns
+        - gbl-dns-dns-delegated
+      vars:
+        cluster_kubernetes_version: "1.17"
+        node_groups:
+          main: &standard_node_group
+            # values of `null` will be replaced with default values
+            # availability_zones = null will create 1 auto scaling group in each availability zone of region
+            availability_zones: ["us-west-2b","us-west-2c"]
+
+            desired_group_size: 2 # number of instances to start with, must be >= number of AZs
+            max_group_size: 4
+            min_group_size: 2
+
+            # Can only set one of ami_release_version or kubernetes_version
+            # Leave both null to use latest AMI for Cluster Kubernetes version
+            kubernetes_version: null   # use cluster Kubernetes version
+            ami_release_version: null  # use latest AMI for Kubernetes version
+
+            attributes: null
+            create_before_destroy: null
+            disk_size: null
+            enable_cluster_autoscaler: null
+            instance_types: null
+            ami_type: null # use "AL2_x86_64" for standard instances, "AL2_x86_64_GPU" for GPU instances
+            kubernetes_labels: null
+            kubernetes_taints: null
+            resources_to_tag: null
+            tags: null
+          gpu:
+            <<: *standard_node_group
+            instance_types: ["g4dn.2xlarge"]
+            ami_type: "AL2_x86_64_GPU"
+            #  kubernetes_taints:
+            #    dedicated: "GPU:NoSchedule"
+            kubernetes_labels:
+              tzlsvc.net/instance-class: GPU
+
+    eks-iam:
+      command: "/usr/bin/terraform-0.13"
+      vars: {}
+
+    vpc:
+      vars:
+        cidr_block: "10.108.0.0/18"
+        nat_gateway_enabled: false
+        nat_instance_enabled: true
+        nat_instance_type: "t3.micro"
+
+  helmfile:
+    autoscaler:
+      vars:
+        installed: true
+
+    aws-node-termination-handler:
+      vars:
+        installed: true
+
+    cert-manager:
+      vars:
+        installed: true
+        ingress_shim_default_issuer_name: "letsencrypt-staging"
+
+    echo-server:
+      vars:
+        installed: true
+
+    efs-provisioner:
+      vars:
+        installed: true
+        efs_dns_name: efs.dev.uw2.tzlsvc.net
+
+    external-dns:
+      vars:
+        installed: true
+
+    idp-roles:
+      vars:
+        installed: true
+
+    ingress-nginx:
+      vars:
+        installed: true
+
+    reloader:
+      vars:
+        installed: true

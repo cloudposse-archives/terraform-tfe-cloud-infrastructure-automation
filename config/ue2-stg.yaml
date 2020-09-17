@@ -1,0 +1,10 @@
+projects:
+  globals:
+    stage: stg
+    account_number: "743447163009"
+
+  terraform:
+    vpc:
+      vars:
+        cidr_block: "10.106.64.0/18"
+        availability_zones: ["us-east-2a", "us-east-2b", "us-east-2c"]
