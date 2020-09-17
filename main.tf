@@ -18,7 +18,7 @@ locals {
 module "tfc_workspace" {
   for_each = local.infrastructure_files
 
-  source = "./workspaces"
+  source = "./modules/workspaces"
 
   config_name = each.key
   organization = var.organization
@@ -27,7 +27,7 @@ module "tfc_workspace" {
 module "tfc_globals" {
   for_each = local.workspace_globals
 
-  source = "./variables"
+  source = "./modules/variables"
 
   variables = each.value
   workspace_id = each.key
@@ -36,7 +36,7 @@ module "tfc_globals" {
 module "tfc_variables" {
   for_each = local.workspace_variables
 
-  source = "./variables"
+  source = "./modules/variables"
 
   variables = each.value
   workspace_id = each.key
@@ -46,7 +46,7 @@ module "tfc_variables" {
 module "tfc_run_triggers" {
   for_each = local.workspace_triggers
 
-  source = "./runtriggers"
+  source = "./modules/runtriggers"
 
   runtriggers = each.value
   workspace_id = each.key
