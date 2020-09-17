@@ -14,6 +14,9 @@ locals {
   workspace_triggers = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_triggers : k => v }]...)
 }
 
+provider "tfe" {
+  token = var.token
+}
 
 module "tfc_workspace" {
   for_each = local.infrastructure_files
