@@ -1,57 +1,28 @@
-locals {
-  # Build a map of our various Infrastructure resources that will be used to iterate over each module
-  // infrastructure_resources = merge([
-  //   for resource_file in fileset(path.cwd, "config/*.yaml") : {
-  //     for k, v in yamldecode(file(resource_file)) : k => v
-  //   }
-  // ]...)
-
-  infrastructure_files = fileset(path.cwd, "config/*.yaml")
-
-  workspace_ids = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_ids : k => v }]...)
-  workspace_globals = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_globals : k => v }]...)
-  workspace_variables = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_variables : k => v }]...)
-  workspace_triggers = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_triggers : k => v }]...)
-}
-
 provider "tfe" {
   token = var.token
 }
 
 module "tfc_workspace" {
-  for_each = local.infrastructure_files
-
   source = "./modules/workspaces"
 
-  config_name = each.key
+  config_name = var.config_name
   organization = var.organization
-}
-
-module "tfc_globals" {
-  for_each = local.workspace_globals
-
-  source = "./modules/variables"
-
-  variables = each.value
-  workspace_id = each.key
+  file_triggers_enabled = var.file_triggers_enabled
+  vcs_repo = var.vcs_repo
 }
 
 module "tfc_variables" {
-  for_each = local.workspace_variables
-
   source = "./modules/variables"
 
-  variables = each.value
-  workspace_id = each.key
-  hcl = true
+  variables = var.variables
+  workspace_id = var.workspace_id
+  hcl = var.hcl
 }
 
 module "tfc_run_triggers" {
-  for_each = local.workspace_triggers
-
   source = "./modules/runtriggers"
 
-  runtriggers = each.value
-  workspace_id = each.key
-  workspace_ids = local.workspace_ids
+  runtriggers = var.runtriggers
+  workspace_id = var.workspace_id
+  workspace_ids = var.workspace_ids
 }

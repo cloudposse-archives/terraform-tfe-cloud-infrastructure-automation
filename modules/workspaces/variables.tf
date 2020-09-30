@@ -45,6 +45,18 @@ variable "terraform_version" {
   default     = null
 }
 
+variable "config__dir_prefix" {
+  description = "Config directory repository-root-relative path"
+  default     = "config/"
+  type        = string
+}
+
+variable "project__dir_prefix" {
+  description = "Project directory repository-root-relative path"
+  default     = "projects/"
+  type        = string
+}
+
 variable "trigger_prefixes" {
   description = "List of repository-root-relative paths which describe all locations to be tracked for changes. workspace. Defaults to the latest available version."
   default     = null

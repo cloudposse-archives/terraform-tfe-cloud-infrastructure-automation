@@ -3,7 +3,7 @@ resource "tfe_variable" "this" {
 
   category  = "terraform"
   key       = each.key
-  value     = jsonencode(each.value)
+  value     = replace(replace(jsonencode(each.value), "/(\".*?\"):/", "$1 = "),"/= null/","= \"\"")
   sensitive = false
   hcl       = true
 

@@ -24,13 +24,11 @@ locals {
   # This is a temp variable to aide in creating a map for other modules
   temp_workspace_ids = { for p in keys(local.workspace_projects) : p => tfe_workspace.sub_project["${p}"].id }
   
-
   # These maps are exported as outputs for other modules
   id_globals_map = { for name, id in local.workspace_ids : id => local.workspace_globals }
   id_variables_map = { for name, id in local.temp_workspace_ids : id => try(local.workspace_configuration.projects.terraform[name].vars,{}) }
   id_triggers_map = { for name, id in local.temp_workspace_ids : id => try(local.workspace_configuration.projects.terraform[name].triggers,[]) }
 }
-
 
 resource "tfe_workspace" "top_level" {
   name         = local.workspace_name
@@ -41,9 +39,8 @@ resource "tfe_workspace" "top_level" {
   queue_all_runs        = var.queue_all_runs
   ssh_key_id            = var.ssh_key_id
   terraform_version     = var.terraform_version
-  trigger_prefixes      = var.trigger_prefixes
+  trigger_prefixes      = ["${var.config__dir_prefix}${local.workspace_name}.yaml"]
   
-
   dynamic "vcs_repo" {
     for_each = lookup(var.vcs_repo, "identifier", "void") == "void" ? [] : [var.vcs_repo]
     content {
@@ -81,5 +78,5 @@ resource "tfe_workspace" "sub_project" {
     }
   }
 
-  working_directory = var.working_directory
+  working_directory = "${var.project__dir_prefix}${each.key}/"
 }
