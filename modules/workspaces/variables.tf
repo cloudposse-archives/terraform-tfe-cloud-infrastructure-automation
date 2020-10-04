@@ -1,11 +1,3 @@
-variable "config_name" {
-  description = "Configuration File Name of the workspace"
-}
-
-variable "organization" {
-  description = "Name of the organization."
-}
-
 variable "auto_apply" {
   description = "Whether to automatically apply changes when a Terraform plan is successful."
   default     = false
@@ -16,17 +8,24 @@ variable "file_triggers_enabled" {
   default     = true
 }
 
+variable "name" {
+  description = "Configuration File Name of the workspace"
+}
+
 variable "notifications" {
   description = "Map of `tfe_notification_configurations` to define in the workspace."
-  default = {
-  }
-  type = map(object({ configuration = map(string), triggers = list(string) }))
+  default     = {}
+  type        = map(object({ configuration = map(string), triggers = list(string) }))
 }
 
 variable "operations" {
-  description = "Whether to use remote execution mode. When set to false, the workspace will be used for state storage only. Defaults to true."
+  description = "Whether to use remote execution mode. When set to false, the workspace will be used for state storage only. Defaults to `true`."
   default     = true
-  type        = boolean
+  type        = bool
+}
+
+variable "organization" {
+  description = "Name of the organization."
 }
 
 variable "queue_all_runs" {
@@ -41,26 +40,13 @@ variable "ssh_key_id" {
 
 variable "team_access" {
   description = "Associate teams to permissions on the workspace."
-  default = {
-  }
-  type = map(string)
+  default     = {}
+  type        = map(string)
 }
 
 variable "terraform_version" {
   description = "The version of Terraform to use for this workspace."
   default     = null
-}
-
-variable "config_dir_prefix" {
-  description = "Config directory repository-root-relative path"
-  default     = "config/"
-  type        = string
-}
-
-variable "project_dir_prefix" {
-  description = "Project directory repository-root-relative path"
-  default     = "projects/"
-  type        = string
 }
 
 variable "trigger_prefixes" {

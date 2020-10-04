@@ -1,24 +1,10 @@
-module "tfc_workspace" {
-  source = "./modules/workspaces"
+// TODO: Consider making this the primary project vs a submodule since it handles everything else
+module "config" {
+  source = "./modules/config"
 
-  config_name           = var.config_name
-  organization          = var.organization
-  file_triggers_enabled = var.file_triggers_enabled
-  vcs_repo              = var.vcs_repo
-}
-
-module "tfc_variables" {
-  source = "./modules/variables"
-
-  variables    = var.variables
-  workspace_id = var.workspace_id
-  hcl          = var.hcl
-}
-
-module "tfc_run_triggers" {
-  source = "./modules/runtriggers"
-
-  runtriggers   = var.runtriggers
-  workspace_id  = var.workspace_id
-  workspace_ids = var.workspace_ids
+  config_file_path    = var.config_file_path
+  config_file_pattern = var.config_file_pattern
+  organization        = var.organization
+  projects_path       = trimsuffix(var.projects_path, "/")
+  vcs_repo            = var.vcs_repo
 }

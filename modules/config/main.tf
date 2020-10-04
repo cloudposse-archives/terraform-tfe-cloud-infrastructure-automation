@@ -1,77 +1,45 @@
 locals {
-  infrastructure_files = fileset(path.cwd, "config/*.yaml")
-
-  workspace_ids       = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_ids : k => v }]...)
-  workspace_globals   = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_globals : k => v }]...)
-  workspace_variables = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_variables : k => v }]...)
-  workspace_triggers  = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_triggers : k => v }]...)
+  // Use the provided config file path or default to the current dir
+  config_file_path = coalesce(var.config_file_path, path.cwd)
+  // Result ex: [gbl-audit.yaml, gbl-auto.yaml, gbl-dev.yaml, ...]
+  config_filenames = fileset(local.config_file_path, var.config_file_pattern)
+  // Result ex: [gbl-audit, gbl-auto, gbl-dev, ...]
+  config_files = { for f in local.config_filenames : trimsuffix(basename(f), ".yaml") => yamldecode(file("${local.config_file_path}/${f}")) }
+  // Result ex: { gbl-audit = { globals = { ... }, terraform = { project1 = { vars = ... }, project2 = { vars = ... } } } }
+  projects = { for f in keys(local.config_files) : f => lookup(local.config_files[f], "projects", {}) }
 }
 
-module "tfc_workspace_config" {
-  source = "./modules/workspaces"
+module "tfc_config" {
+  source = "../workspaces"
 
-  config_name           = "config"
-  organization          = var.organization
+  auto_apply            = false // TODO: verify
   file_triggers_enabled = true
-  vcs_repo              = var.vcs_repo
-}
-
-module "tfc_workspace_toplevel" {
-  for_each = local.infrastructure_files
-
-  source = "./modules/workspaces"
-
-  config_name           = each.key
+  name                  = "tfc-config"
   organization          = var.organization
-  file_triggers_enabled = true
+  trigger_prefixes      = [local.config_file_path]
   vcs_repo              = var.vcs_repo
+  working_directory     = "${var.projects_path}/tfc"
 }
 
-module "tfc_workspace_subproject" {
-  for_each = local.infrastructure_files
+module "tfc_projects" {
+  source = "../project"
 
-  source = "./modules/workspaces"
+  for_each = local.projects
 
-  config_name           = each.key
-  organization          = var.organization
-  file_triggers_enabled = true
-  vcs_repo              = var.vcs_repo
+  config_name   = each.key
+  organization  = var.organization
+  projects      = each.value
+  projects_path = var.projects_path
+  vcs_repo      = var.vcs_repo
 }
 
-module "tfc_globals" {
-  for_each = local.workspace_globals
+# TODO: support run triggers
+# module "tfc_run_triggers" {
+#   source = "../runtriggers"
 
-  source = "./modules/variables"
+#   for_each = local.workspace_triggers
 
-  variables    = each.value
-  workspace_id = each.key
-}
-
-module "tfc_workspace_globals" {
-  for_each = local.workspace_globals
-
-  source = "./modules/variables"
-
-  variables    = each.value
-  workspace_id = each.key
-}
-
-module "tfc_workspace_variables" {
-  for_each = local.workspace_variables
-
-  source = "./modules/variables"
-
-  variables    = each.value
-  workspace_id = each.key
-  hcl          = true
-}
-
-module "tfc_run_triggers" {
-  for_each = local.workspace_triggers
-
-  source = "./modules/runtriggers"
-
-  runtriggers   = each.value
-  workspace_id  = each.key
-  workspace_ids = local.workspace_ids
-}
+#   runtriggers   = each.value
+#   workspace_id  = each.key
+#   workspace_ids = local.workspace_ids
+# }

@@ -1,10 +1,9 @@
-variable "config_file_path" {
-  default = null
-  type    = string
+variable "config_name" {
+  type = string
 }
 
-variable "config_file_pattern" {
-  default = "*.yaml"
+variable "projects" {
+  type = any
 }
 
 variable "organization" {

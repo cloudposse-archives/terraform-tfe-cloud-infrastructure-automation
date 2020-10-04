@@ -1,11 +1,10 @@
 resource "tfe_variable" "this" {
   for_each = var.variables
 
-  category  = "terraform"
-  key       = each.key
-  value     = replace(replace(jsonencode(each.value), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"")
-  sensitive = false
-  hcl       = true
-
+  category     = var.category
+  hcl          = var.hcl
+  key          = var.category == "env" ? "TF_VAR_${each.key}" : each.key
+  sensitive    = var.sensitive
+  value        = var.hcl ? replace(replace(jsonencode(each.value), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"") : tostring(each.value)
   workspace_id = var.workspace_id
 }
