@@ -23,6 +23,12 @@ variable "notifications" {
   type = map(object({ configuration = map(string), triggers = list(string) }))
 }
 
+variable "operations" {
+  description = "Whether to use remote execution mode. When set to false, the workspace will be used for state storage only. Defaults to true."
+  default     = true
+  type        = boolean
+}
+
 variable "queue_all_runs" {
   description = "Whether all runs should be queued. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued."
   default     = true
@@ -45,13 +51,13 @@ variable "terraform_version" {
   default     = null
 }
 
-variable "config__dir_prefix" {
+variable "config_dir_prefix" {
   description = "Config directory repository-root-relative path"
   default     = "config/"
   type        = string
 }
 
-variable "project__dir_prefix" {
+variable "project_dir_prefix" {
   description = "Project directory repository-root-relative path"
   default     = "projects/"
   type        = string

@@ -5,5 +5,5 @@ output "id" {
 
 output "name" {
   description = "The workspace's name"
-  value       = tfe_workspace.this.nameß
+  value       = tfe_workspace.this.name
 }

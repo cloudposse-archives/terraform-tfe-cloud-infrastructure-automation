@@ -1,13 +1,13 @@
 variable "variables" {
   description = "Map of environment or Terraform variables to define in the workspace."
-  default = {}
+  default     = {}
   //type = map(object)
-}
-
-variable "workspace_id" {
-  description = "ID of TFE Workspace"
 }
 
 variable "hcl" {
   default = false
+}
+
+variable "workspace_id" {
+  description = "ID of TFE Workspace"
 }

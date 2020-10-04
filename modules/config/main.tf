@@ -1,23 +1,19 @@
 locals {
   infrastructure_files = fileset(path.cwd, "config/*.yaml")
 
-  workspace_ids = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_ids : k => v }]...)
-  workspace_globals = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_globals : k => v }]...)
-  workspace_variables = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_variables : k => v }]...)
-  workspace_triggers = merge([for p in local.infrastructure_files : { for k,v in module.tfc_workspace[p].workspace_triggers : k => v }]...)
-}
-
-provider "tfe" {
-  token = var.token
+  workspace_ids       = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_ids : k => v }]...)
+  workspace_globals   = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_globals : k => v }]...)
+  workspace_variables = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_variables : k => v }]...)
+  workspace_triggers  = merge([for p in local.infrastructure_files : { for k, v in module.tfc_workspace[p].workspace_triggers : k => v }]...)
 }
 
 module "tfc_workspace_config" {
   source = "./modules/workspaces"
 
-  config_name = "config"
-  organization = var.organization
+  config_name           = "config"
+  organization          = var.organization
   file_triggers_enabled = true
-  vcs_repo = var.vcs_repo
+  vcs_repo              = var.vcs_repo
 }
 
 module "tfc_workspace_toplevel" {
@@ -25,10 +21,10 @@ module "tfc_workspace_toplevel" {
 
   source = "./modules/workspaces"
 
-  config_name = each.key
-  organization = var.organization
+  config_name           = each.key
+  organization          = var.organization
   file_triggers_enabled = true
-  vcs_repo = var.vcs_repo
+  vcs_repo              = var.vcs_repo
 }
 
 module "tfc_workspace_subproject" {
@@ -36,10 +32,10 @@ module "tfc_workspace_subproject" {
 
   source = "./modules/workspaces"
 
-  config_name = each.key
-  organization = var.organization
+  config_name           = each.key
+  organization          = var.organization
   file_triggers_enabled = true
-  vcs_repo = var.vcs_repo
+  vcs_repo              = var.vcs_repo
 }
 
 module "tfc_globals" {
@@ -47,7 +43,7 @@ module "tfc_globals" {
 
   source = "./modules/variables"
 
-  variables = each.value
+  variables    = each.value
   workspace_id = each.key
 }
 
@@ -56,7 +52,7 @@ module "tfc_workspace_globals" {
 
   source = "./modules/variables"
 
-  variables = each.value
+  variables    = each.value
   workspace_id = each.key
 }
 
@@ -65,9 +61,9 @@ module "tfc_workspace_variables" {
 
   source = "./modules/variables"
 
-  variables = each.value
+  variables    = each.value
   workspace_id = each.key
-  hcl = true
+  hcl          = true
 }
 
 module "tfc_run_triggers" {
@@ -75,7 +71,7 @@ module "tfc_run_triggers" {
 
   source = "./modules/runtriggers"
 
-  runtriggers = each.value
-  workspace_id = each.key
+  runtriggers   = each.value
+  workspace_id  = each.key
   workspace_ids = local.workspace_ids
 }

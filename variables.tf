@@ -1,5 +1,5 @@
 variable "token" {
- description = "TFE token"
+  description = "TFE token"
 }
 
 variable "organization" {
@@ -15,7 +15,7 @@ variable "vcs_repo" {
 
 variable "runtriggers" {
   description = "Map of Run Triggers for Terraform Enterprise"
-  default = {}
+  default     = {}
 }
 
 variable "workspace_id" {
@@ -23,12 +23,12 @@ variable "workspace_id" {
 }
 
 variable "workspace_ids" {
-    description = "Map of All TFE Workspace IDs"
+  description = "Map of All TFE Workspace IDs"
 }
 
 variable "variables" {
   description = "Map of environment or Terraform variables to define in the workspace."
-  default = {}
+  default     = {}
 }
 
 variable "hcl" {

@@ -1,17 +1,17 @@
 output "workspace_ids" {
-   value = local.workspace_ids
+  value = local.workspace_ids
 }
 
 output "workspace_globals" {
-   value = local.workspace_globals
+  value = local.workspace_globals
 }
 
 output "workspace_variables" {
-   value = local.workspace_variables
+  value = local.workspace_variables
 }
 
 output "workspace_triggers" {
-   value = local.workspace_triggers
+  value = local.workspace_triggers
 }
 
 // output "workspace_configuration" {

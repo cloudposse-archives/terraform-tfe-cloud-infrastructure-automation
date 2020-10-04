@@ -1,6 +1,6 @@
 variable "runtriggers" {
   description = "Map of Run Triggers for Terraform Enterprise"
-  default = {}
+  default     = {}
 }
 
 variable "workspace_id" {
@@ -8,5 +8,5 @@ variable "workspace_id" {
 }
 
 variable "workspace_ids" {
-    description = "Map of All TFE Workspace IDs"
+  description = "Map of All TFE Workspace IDs"
 }
