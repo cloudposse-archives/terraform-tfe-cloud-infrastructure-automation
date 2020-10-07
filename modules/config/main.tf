@@ -16,7 +16,7 @@ module "tfc_config" {
   file_triggers_enabled = true
   name                  = "tfc-config"
   organization          = var.organization
-  trigger_prefixes      = [local.config_file_path]
+  trigger_prefixes      = [basename(local.config_file_path)]
   vcs_repo              = var.vcs_repo
   working_directory     = "${var.projects_path}/tfc"
 }
