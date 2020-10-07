@@ -29,10 +29,11 @@ No provider.
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | organization | Name of the organization. | `any` | n/a | yes |
-| projects\_path | Project directory repository-root-relative path | `string` | `"projects/"` | no |
+| projects\_path | Project directory repository-root-relative path | `string` | `"projects"` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
+| terraform\_version | The version of Terraform to use for this workspace. Defaults to the latest available version. | `string` | `null` | no |
 | vcs\_repo | The VCS repository to configure. | `map(string)` | `{}` | no |
 
 ## Outputs
@@ -40,5 +41,6 @@ No provider.
 | Name | Description |
 |------|-------------|
 | config | n/a |
+| projects | n/a |
 
 <!-- markdownlint-restore -->
