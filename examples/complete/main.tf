@@ -1,7 +1,13 @@
 module "example" {
-  source = "../.."
+  source = "../../"
 
-  example = var.example
+  config_file_path = "config"
+  organization     = var.organization
 
-  context = module.this.context
+  vcs_repo = {
+    branch             = var.branch
+    identifier         = var.identifier
+    ingress_submodules = var.ingress_submodules
+    oauth_token_id     = var.oauth_token_id
+  }
 }

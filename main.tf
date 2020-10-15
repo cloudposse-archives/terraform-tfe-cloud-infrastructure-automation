@@ -12,7 +12,7 @@ locals {
 module "tfc_config" {
   source = "./modules/workspaces"
 
-  auto_apply            = true
+  auto_apply            = var.config_auto_apply
   file_triggers_enabled = true
   name                  = "tfc-config"
   organization          = var.organization
@@ -38,9 +38,9 @@ module "tfc_projects" {
 # module "tfc_run_triggers" {
 #   source = "./modules/runtriggers"
 
-#   for_each = local.workspace_triggers
+#   for_each = local.projects
 
 #   runtriggers   = each.value
-#   workspace_id  = each.key
-#   workspace_ids = local.workspace_ids
+#   workspace_id  = module.tfc_projects[each.key].workspace.id
+#   workspace_ids =
 # }

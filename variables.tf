@@ -1,3 +1,8 @@
+variable "config_auto_apply" {
+  default = true
+  type = bool
+}
+
 variable "config_file_path" {
   default = null
   type    = string
