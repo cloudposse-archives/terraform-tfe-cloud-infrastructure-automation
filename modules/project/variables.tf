@@ -39,6 +39,12 @@ variable "projects_path" {
   default     = "projects"
 }
 
+variable "custom_project_folder" {
+  description = "Use this to override the name of the project folder"
+  type        = string
+  default     = null
+}
+
 variable "vcs_repo" {
   description = "The VCS repository to configure."
   default = {}

@@ -22,14 +22,15 @@ module "projects" {
 
   for_each = var.projects
 
-  enabled             = try(each.value.workspace_enabled, false)
-  organization        = var.organization
-  environment         = module.workspace.workspace.name
-  global_values       = var.global_values
-  project_name        = each.key
-  project_values      = each.value.vars
-  projects_path       = var.projects_path
-  vcs_repo            = var.vcs_repo
-  terraform_version   = try(each.value.terraform_version, null)
-  parent_workspace_id = module.workspace.workspace.id
+  enabled               = try(each.value.workspace_enabled, false)
+  organization          = var.organization
+  environment           = module.workspace.workspace.name
+  global_values         = var.global_values
+  project_name          = each.key
+  project_values        = each.value.vars
+  projects_path         = var.projects_path
+  custom_project_folder = try(each.value.custom_project_folder, null)
+  vcs_repo              = var.vcs_repo
+  terraform_version     = try(each.value.terraform_version, null)
+  parent_workspace_id   = module.workspace.workspace.id
 }

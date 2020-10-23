@@ -1,3 +1,7 @@
+locals {
+  project_folder = coalesce(var.custom_project_folder, var.project_name)
+}
+
 module "workspace" {
   source = "../workspaces"
 
@@ -7,9 +11,9 @@ module "workspace" {
   file_triggers_enabled = true
   name                  = "${var.environment}-${var.project_name}"
   organization          = var.organization
-  trigger_prefixes      = ["${var.projects_path}/${var.project_name}/*.tf"]
+  trigger_prefixes      = ["${var.projects_path}/${local.project_folder}/*.tf"]
   vcs_repo              = var.vcs_repo
-  working_directory     = "${var.projects_path}/${var.project_name}"
+  working_directory     = "${var.projects_path}/${local.project_folder}"
   terraform_version     = var.terraform_version
 }
 
