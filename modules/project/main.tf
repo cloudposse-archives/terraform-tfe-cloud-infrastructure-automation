@@ -1,34 +1,42 @@
 module "workspace" {
   source = "../workspaces"
 
-  for_each = lookup(var.projects, "terraform", {})
+  count = var.enabled ? 1 : 0
 
   auto_apply            = false // TODO: verify
   file_triggers_enabled = true
-  name                  = "${var.config_name}-${each.key}"
+  name                  = "${var.environment}-${var.project_name}"
   organization          = var.organization
-  trigger_prefixes      = ["projects/${each.key}/*.tf"]
+  trigger_prefixes      = ["${var.projects_path}/${var.project_name}/*.tf"]
   vcs_repo              = var.vcs_repo
-  working_directory     = "${var.projects_path}/${each.key}" // TODO: add support for custom project directories
+  working_directory     = "${var.projects_path}/${var.project_name}"
+  terraform_version     = var.terraform_version
 }
 
 module "variables" {
   source = "../variables"
 
-  for_each = lookup(var.projects, "terraform", {})
+  count = var.enabled ? 1 : 0
 
   hcl          = true
-  variables    = each.value.vars
-  workspace_id = module.workspace[each.key].workspace["id"]
+  variables    = var.project_values
+  workspace_id = module.workspace[0].workspace.id
 }
 
 module "env_vars" {
   source = "../variables"
 
-  for_each = lookup(var.projects, "terraform", {})
+  count = var.enabled ? 1 : 0
 
   category     = "env"
   hcl          = false
-  variables    = lookup(var.projects, "globals", {})
-  workspace_id = module.workspace[each.key].workspace["id"]
+  variables    = var.global_values
+  workspace_id = module.workspace[0].workspace.id
+}
+
+resource "tfe_run_trigger" "this" {
+  count = var.enabled ? 1 : 0
+
+  workspace_id  = module.workspace[0].workspace.id
+  sourceable_id = var.parent_workspace_id
 }

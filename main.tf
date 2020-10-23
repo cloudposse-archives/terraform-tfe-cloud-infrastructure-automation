@@ -7,6 +7,35 @@ locals {
   config_files = { for f in local.config_filenames : trimsuffix(basename(f), ".yaml") => yamldecode(file("${local.config_file_path}/${f}")) }
   // Result ex: { gbl-audit = { globals = { ... }, terraform = { project1 = { vars = ... }, project2 = { vars = ... } } } }
   projects = { for f in keys(local.config_files) : f => lookup(local.config_files[f], "projects", {}) }
+
+  environment_workspaces = {
+    for k, v in module.tfc_environment : k => {
+      "workspace" = v.workspace,
+      "projects" = [
+        for project_name, project_values in v.projects : project_name
+      ]
+    }
+  }
+
+  project_workspaces = merge([
+    for k, v in module.tfc_environment : {
+      for env, config in v.projects : 
+        "${k}-${env}" => config
+    }
+  ]...)
+
+  custom_triggers = merge(flatten([
+    for k, v in local.projects : [
+      for project, settings in v.terraform : {
+        for trigger in (try(settings.triggers, null) != null ? settings.triggers : []) : 
+          "${k}-${project}-${trigger}" => {
+            source      = trigger
+            destination = "${k}-${project}"
+          } if try(settings.workspace_enabled, false) && 
+            (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
+      }
+    ]
+  ])...)
 }
 
 module "tfc_config" {
@@ -22,25 +51,23 @@ module "tfc_config" {
   working_directory     = "${var.projects_path}/tfc"
 }
 
-module "tfc_projects" {
-  source = "./modules/project"
+module "tfc_environment" {
+  source = "./modules/environment"
 
   for_each = local.projects
 
   config_name   = each.key
-  organization  = var.organization
-  projects      = each.value
+  global_values = each.value.globals
+  projects      = local.projects[each.key].terraform
   projects_path = var.projects_path
+  organization  = var.organization
   vcs_repo      = var.vcs_repo
 }
 
-# TODO: support run triggers
-# module "tfc_run_triggers" {
-#   source = "./modules/runtriggers"
+resource "tfe_run_trigger" "this" {
+  for_each = local.custom_triggers
 
-#   for_each = local.projects
-
-#   runtriggers   = each.value
-#   workspace_id  = module.tfc_projects[each.key].workspace.id
-#   workspace_ids =
-# }
+  # We need to be able to link the trigger to another 3rd tier project workspace, or a 2nd tier environment workspace
+  workspace_id  = local.project_workspaces[each.value.destination].workspace.id
+  sourceable_id = try(local.project_workspaces[each.value.source].workspace.id, local.environment_workspaces[each.value.source].workspace.id)
+}

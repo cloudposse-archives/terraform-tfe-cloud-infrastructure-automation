@@ -1,0 +1,12 @@
+projects:
+  globals:
+    stage: example
+    environment: gbl
+    account_number: "012345678901"
+
+  terraform:
+    cloudtrail:
+      workspace_enabled: true
+      vars:
+        cloudtrail_s3_bucket_name: "eg-ue2-audit-cloudtrail"
+        cloudtrail_logs_retention_in_days: 90

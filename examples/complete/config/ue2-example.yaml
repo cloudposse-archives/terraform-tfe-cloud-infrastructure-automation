@@ -1,0 +1,18 @@
+projects:
+  globals:
+    stage: example
+    environment: ue2
+    account_number: "012345678901"
+
+  terraform:
+    vpc:
+      workspace_enabled: true
+      terraform_version: 0.13.4
+      triggers:
+        - uw2-example
+        - gbl-root-cloudtrail
+      vars:
+        cidr_block: "10.0.0.0/16"
+        nat_gateway_enabled: false
+        nat_instance_enabled: true
+        nat_instance_type: "t3.micro"

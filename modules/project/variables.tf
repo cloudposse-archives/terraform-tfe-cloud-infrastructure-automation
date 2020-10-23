@@ -1,24 +1,52 @@
-variable "config_name" {
+variable "enabled" {
+  default = false
+  type = bool
+}
+
+variable "parent_workspace_id" {
+  description = "For our run triggers."
+  default = null
   type = string
 }
 
-variable "projects" {
-  type = any
+variable "environment" {
+  type = string
+}
+
+variable "project_name" {
+  type        = string
+  description = "Name of the project"
+}
+
+variable "project_values" {
+  type        = map
+  description = "Map of project-level environment variables"
+}
+
+variable "global_values" {
+  type        = map
+  description = "Map of project-level Terraform variables"
 }
 
 variable "organization" {
+  type        = string
   description = "Name of the organization."
 }
 
 variable "projects_path" {
   description = "Project directory repository-root-relative path"
-  default     = "projects/"
   type        = string
+  default     = "projects"
 }
 
 variable "vcs_repo" {
   description = "The VCS repository to configure."
-  default = {
-  }
+  default = {}
   type = map(string)
+}
+
+variable "terraform_version" {
+  type        = string
+  description = "The version of Terraform to use for this workspace."
+  default     = null
 }

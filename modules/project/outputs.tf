@@ -1,3 +1,3 @@
-output "config" {
-  value = { for k, v in module.workspace : k => { workspace = v.workspace, variables = module.variables[k].variables, env_vars = module.env_vars[k].variables } }
+output "workspace" {
+  value = try(module.workspace[0].workspace, null)
 }

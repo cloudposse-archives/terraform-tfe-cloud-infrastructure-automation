@@ -33,5 +33,6 @@ variable "tfe_hostname" {
 
 variable "tfe_token" {
   description = "The token used to authenticate with Terraform Enterprise. Only set this argument when running in a Terraform Enterprise workspace; for CLI usage, omit the token from the configuration and set it as `credentials` in the CLI config file or set the `TFE_TOKEN` environment variable."
+  default     = null
   type        = string
 }

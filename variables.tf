@@ -1,18 +1,23 @@
 variable "config_auto_apply" {
-  default = true
-  type = bool
+  type        = bool
+  description = "Controls Terraform Cloud workspace auto-apply feature"
+  default     = true
 }
 
 variable "config_file_path" {
-  default = null
-  type    = string
+  type        = string
+  description = "Relative path to YAML config files"
+  default     = null
 }
 
 variable "config_file_pattern" {
-  default = "*.yaml"
+  type        = string
+  description = "File pattern used to locate configuration files"
+  default     = "*.yaml"
 }
 
 variable "organization" {
+  type        = string
   description = "Name of the organization."
 }
 
