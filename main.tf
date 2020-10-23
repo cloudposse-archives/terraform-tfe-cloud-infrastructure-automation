@@ -39,6 +39,7 @@ locals {
   ])...)
 }
 
+# Create our top-level workspace
 module "tfc_config" {
   source = "./modules/workspaces"
 
@@ -52,6 +53,7 @@ module "tfc_config" {
   working_directory     = "${var.projects_path}/tfc"
 }
 
+# Create our 2nd-tier environment workspaces, as well as our 3rd-tier project workspaces
 module "tfc_environment" {
   source = "./modules/environment"
 
@@ -65,10 +67,11 @@ module "tfc_environment" {
   vcs_repo      = var.vcs_repo
 }
 
+# Generate our custom triggers based on configuration defined in YAML (at the project level)
 resource "tfe_run_trigger" "this" {
   for_each = local.custom_triggers
 
-  # We need to be able to link the trigger to another 3rd tier project workspace, OR a 2nd tier environment workspace
+  # We link the trigger to another 3rd tier project workspace, OR a 2nd tier environment workspace
   workspace_id  = local.project_workspaces[each.value.destination].workspace.id
   sourceable_id = try(local.project_workspaces[each.value.source].workspace.id, local.environment_workspaces[each.value.source].workspace.id)
 }
