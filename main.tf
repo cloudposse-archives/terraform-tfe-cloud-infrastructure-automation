@@ -31,8 +31,9 @@ locals {
           "${k}-${project}-${trigger}" => {
             source      = trigger
             destination = "${k}-${project}"
-          } if try(settings.workspace_enabled, false) && 
-            (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
+          } if try(settings.workspace_enabled, false)
+            # TODO - This causes issues if the workspace is created during this same execution...
+            #  && (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
       }
     ]
   ])...)
@@ -67,7 +68,7 @@ module "tfc_environment" {
 resource "tfe_run_trigger" "this" {
   for_each = local.custom_triggers
 
-  # We need to be able to link the trigger to another 3rd tier project workspace, or a 2nd tier environment workspace
+  # We need to be able to link the trigger to another 3rd tier project workspace, OR a 2nd tier environment workspace
   workspace_id  = local.project_workspaces[each.value.destination].workspace.id
   sourceable_id = try(local.project_workspaces[each.value.source].workspace.id, local.environment_workspaces[each.value.source].workspace.id)
 }

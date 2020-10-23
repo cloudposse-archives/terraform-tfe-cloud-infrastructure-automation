@@ -6,7 +6,7 @@ projects:
 
   terraform:
     cloudtrail:
-      workspace_enabled: true
+      workspace_enabled: false
       vars:
         cloudtrail_s3_bucket_name: "eg-ue2-audit-cloudtrail"
         cloudtrail_logs_retention_in_days: 90
