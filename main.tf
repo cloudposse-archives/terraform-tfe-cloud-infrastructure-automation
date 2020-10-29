@@ -19,21 +19,21 @@ locals {
 
   project_workspaces = merge([
     for k, v in module.tfc_environment : {
-      for env, config in v.projects : 
-        "${k}-${env}" => config
+      for env, config in v.projects :
+      "${k}-${env}" => config
     }
   ]...)
 
   custom_triggers = merge(flatten([
     for k, v in local.projects : [
       for project, settings in v.terraform : {
-        for trigger in (try(settings.triggers, null) != null ? settings.triggers : []) : 
-          "${k}-${project}-${trigger}" => {
-            source      = trigger
-            destination = "${k}-${project}"
-          } if try(settings.workspace_enabled, false)
-            # TODO - This causes issues if the workspace is created during this same execution...
-            #  && (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
+        for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
+        "${k}-${project}-${trigger}" => {
+          source      = trigger
+          destination = "${k}-${project}"
+        } if try(settings.workspace_enabled, false)
+        # TODO - This causes issues if the workspace is created during this same execution...
+        #  && (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
       }
     ]
   ])...)
@@ -45,12 +45,12 @@ module "tfc_config" {
 
   auto_apply            = var.config_auto_apply
   file_triggers_enabled = true
-  name                  = "tfc-config"
+  name                  = var.top_level_workspace
   organization          = var.organization
   terraform_version     = var.terraform_version
   trigger_prefixes      = [basename(local.config_file_path)]
   vcs_repo              = var.vcs_repo
-  working_directory     = "${var.projects_path}/tfc"
+  working_directory     = "${var.projects_path}/${var.tfc_project_path}"
 }
 
 # Create our 2nd-tier environment workspaces, as well as our 3rd-tier project workspaces

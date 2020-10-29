@@ -1,3 +1,9 @@
+variable "top_level_workspace" {
+  type        = string
+  description = "Name of the top-level configuration workspace in Terraform Cloud"
+  default     = "tfc-config"
+}
+
 variable "config_auto_apply" {
   type        = bool
   description = "Controls Terraform Cloud workspace auto-apply feature"
@@ -22,20 +28,26 @@ variable "organization" {
 }
 
 variable "projects_path" {
+  type        = string
   description = "Project directory repository-root-relative path"
   default     = "projects"
+}
+
+variable "tfc_project_path" {
   type        = string
+  description = "Name of the working directory where the top-level Terraform Cloud project resides (e.g. within `projects_path`)."
+  default     = "tfc"
 }
 
 variable "terraform_version" {
+  type        = string
   description = "The version of Terraform to use for this workspace. Defaults to the latest available version."
   default     = null
-  type        = string
 }
 
 variable "vcs_repo" {
+  type = map(string)
   description = "The VCS repository to configure."
   default = {
   }
-  type = map(string)
 }
