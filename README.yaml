@@ -81,7 +81,7 @@ usage: |-
     vcs_repo = {
       branch             = "main"
       identifier         = var.identifier
-      ingress_submodules = var.ingress_submodules
+      ingress_submodules = true
       oauth_token_id     = var.oauth_token_id
     }
   }
