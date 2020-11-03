@@ -191,8 +191,6 @@ Check out these related projects.
 
 For additional context, refer to some of these links.
 
-- [Terraform Standard Module Structure](https://www.terraform.io/docs/modules/index.html#standard-module-structure) - HashiCorp's standard module structure is a file and directory layout we recommend for reusable modules distributed in separate repositories.
-- [Terraform Module Requirements](https://www.terraform.io/docs/registry/modules/publish.html#requirements) - HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy.
 - [Terraform Version Pinning](https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version) - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration
 - [Terraform Cloud](https://app.terraform.io/signup/account) - Terraform Cloud is an application that helps teams use Terraform together.
 - [Terraform Enterprise/Cloud Documentation](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) - 
