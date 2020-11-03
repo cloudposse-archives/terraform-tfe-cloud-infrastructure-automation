@@ -47,12 +47,15 @@ references:
   - name: "Terraform Module Requirements"
     description: "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy."
     url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
-  - name: "Terraform `random_integer` Resource"
-    description: "The resource random_integer generates random values from a given range, described by the min and max attributes of a given resource."
-    url: "https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer"
   - name: "Terraform Version Pinning"
     description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration"
     url: "https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version"
+  - name: "Terraform Cloud"
+    description: "Terraform Cloud is an application that helps teams use Terraform together."
+    url: "https://app.terraform.io/signup/account"
+  - name: "Terraform Enterprise/Cloud Documentation"
+    description: ""
+    url: "https://registry.terraform.io/providers/hashicorp/tfe/latest/docs"
 
 # Short description of this project
 description: |-
