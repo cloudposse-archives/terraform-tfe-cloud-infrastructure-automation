@@ -93,6 +93,7 @@ examples: |-
   
   ```yaml
   projects:
+    # Globals are exported as TF_VAR_... environment variables in every workspace
     globals:
       # Used to determine the name of the workspace (e.g. the 'testing' in 'ue2-testing')
       stage: testing
