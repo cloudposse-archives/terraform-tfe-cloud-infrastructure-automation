@@ -1,6 +1,6 @@
 projects:
   globals:
-    stage: dev
+    stage: testing
     environment: uw2
 
   terraform:
