@@ -34,6 +34,10 @@ badges:
     image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
     url: "https://ask.sweetops.com/"
 
+related:
+  - name: "terraform-kubernetes-tfc-cloud-agent"
+    description: "Installs the Terraform Cloud Agent on an existing Kubernetes cluster."
+    url: "https://github.com/cloudposse/terraform-kubernetes-tfc-cloud-agent"
 
 # List any resources helpful for someone to get started. For example, link to the hashicorp documentation or AWS documentation.
 references:

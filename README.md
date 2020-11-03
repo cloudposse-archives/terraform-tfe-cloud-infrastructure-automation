@@ -171,6 +171,21 @@ Available targets:
 
 
 
+## Share the Love
+
+Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation)! (it helps us **a lot**)
+
+Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
+
+
+## Related Projects
+
+Check out these related projects.
+
+- [terraform-kubernetes-tfc-cloud-agent](https://github.com/cloudposse/terraform-kubernetes-tfc-cloud-agent) - Installs the Terraform Cloud Agent on an existing Kubernetes cluster.
+
+
+
 
 ## References
 
