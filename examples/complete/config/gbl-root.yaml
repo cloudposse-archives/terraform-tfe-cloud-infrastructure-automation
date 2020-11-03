@@ -1,6 +1,6 @@
 projects:
   globals:
-    stage: example
+    stage: testing
     environment: gbl
 
   terraform:
