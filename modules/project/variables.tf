@@ -1,12 +1,12 @@
 variable "enabled" {
   default = false
-  type = bool
+  type    = bool
 }
 
 variable "parent_workspace_id" {
   description = "For our run triggers."
-  default = null
-  type = string
+  default     = null
+  type        = string
 }
 
 variable "environment" {
@@ -47,8 +47,8 @@ variable "custom_project_folder" {
 
 variable "vcs_repo" {
   description = "The VCS repository to configure."
-  default = {}
-  type = map(string)
+  default     = {}
+  type        = map(string)
 }
 
 variable "terraform_version" {
