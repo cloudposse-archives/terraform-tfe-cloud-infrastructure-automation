@@ -121,6 +121,7 @@ examples: |-
       # Set the Terraform input variable values for this project. Complex types like maps and lists are supported.
       vars:
         my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
+    # Every project should be uniquely named and correspond to a folder in the `projects/` directory
     second-project:
       workspace_enabled: true
       # Specify a custom project folder (defalts to the project name if not specified)
