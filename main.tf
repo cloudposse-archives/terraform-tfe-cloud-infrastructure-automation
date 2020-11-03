@@ -32,8 +32,6 @@ locals {
           source      = trigger
           destination = "${k}-${project}"
         } if try(settings.workspace_enabled, false)
-        # TODO - This causes issues if the workspace is created during this same execution...
-        #  && (try(local.project_workspaces[trigger].workspace, null) != null ? true : false)
       }
     ]
   ])...)

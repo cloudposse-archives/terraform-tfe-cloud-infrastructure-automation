@@ -2,12 +2,10 @@ projects:
   globals:
     stage: example
     environment: gbl
-    account_number: "012345678901"
 
   terraform:
-    cloudtrail:
+    example1:
       workspace_enabled: true
-      custom_project_folder: cloudtrail-foo
+      custom_project_folder: example1-custom
       vars:
-        cloudtrail_s3_bucket_name: "eg-ue2-audit-cloudtrail"
-        cloudtrail_logs_retention_in_days: 90
+        my_input_var: "Hello world! This is example1!"

@@ -9,3 +9,4 @@ output "environment_workspaces" {
 output "project_workspaces" {
   value = local.project_workspaces
 }
+

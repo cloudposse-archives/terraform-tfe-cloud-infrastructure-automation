@@ -16,7 +16,7 @@ variable "global_values" {
 }
 
 variable "projects" {
-  type        = map
+  type        = any
   default     = {}
   description = "A map of all projects and related configurations that exist within the environment."
 }
