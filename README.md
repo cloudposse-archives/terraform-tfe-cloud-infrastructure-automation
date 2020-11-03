@@ -70,12 +70,10 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/releases).
 
 
-Here's how to invoke this example module in your projects
+Here's how to invoke this example module in your projects:
 
 ```hcl
 provider "tfe" {
-  hostname = var.tfe_hostname
-  token    = var.tfe_token
   version  = ">= 0.21.0"
 }
 
@@ -86,9 +84,8 @@ module "example" {
   organization     = var.organization
 
   vcs_repo = {
-    branch             = var.branch
-    identifier         = var.identifier
-    ingress_submodules = var.ingress_submodules
+    branch             = "main"
+    ingress_submodules = true
     oauth_token_id     = var.oauth_token_id
   }
 }
@@ -101,6 +98,43 @@ module "example" {
 
 Here is an example of using this module:
 - [`examples/complete`](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/) - complete example of using this module
+
+And here is a YAML configuration file example (typically named `ue2-testing.yaml`):
+
+```yaml
+projects:
+  globals:
+    # Used to determine the name of the workspace (e.g. the 'testing' in 'ue2-testing')
+    stage: testing
+    # Used to determine the name of the workspace (e.g. the 'ue2' in 'ue2-testing')
+    environment: ue2
+
+terraform:
+  # List one or more Terraform projects here
+  first-project:
+    # Controls whether or not this workspace should be created
+    # NOTE: If set to 'false', you cannot reference this workspace via a `trigger` in another workspace!
+    workspace_enabled: true
+    # Override the version of Terraform for this workspace (defaults to the latest in Terraform Cloud/Enterprise)
+    terraform_version: 0.13.4
+    # Controls the `auto_apply` setting within this workspace
+    auto_apply: true
+    # Optional filename trigger to match (default is *.tf)
+    filename_trigger: "*.*"
+    # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
+    triggers:
+      - uw2-testing-example2
+      - gbl-root-example1
+    # Set the Terraform input variable values for this project
+    vars:
+      my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
+  second-project:
+    workspace_enabled: true
+    # Specify a custom project folder (defalts to the project name if not specified)
+    custom_project_folder: my-custom-project-folder
+    vars:
+      my_input_var: "Hello world! This is another example!"
+```
 
 
 
