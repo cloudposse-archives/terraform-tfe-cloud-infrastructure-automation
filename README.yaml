@@ -92,6 +92,7 @@ examples: |-
   And here is a YAML configuration file example (typically named `ue2-testing.yaml`):
   
   ```yaml
+  # Projects are all the top-level root modules
   projects:
     # Globals are exported as TF_VAR_... environment variables in every workspace
     globals:
