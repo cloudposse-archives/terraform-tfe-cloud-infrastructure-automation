@@ -46,7 +46,7 @@ variable "terraform_version" {
 }
 
 variable "vcs_repo" {
-  type = map(string)
+  type        = map(string)
   description = "The VCS repository to configure."
   default = {
   }

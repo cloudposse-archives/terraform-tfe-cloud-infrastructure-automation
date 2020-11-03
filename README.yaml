@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-example-module
+name: terraform-tfe-cloud-infrastructure-automation
 
 # Logo for this project
 #logo: docs/logo.png
@@ -20,13 +20,13 @@ copyrights:
     year: "2020"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-example-module
+github_repo: cloudposse/terraform-tfe-cloud-infrastructure-automation
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-example-module.svg"
-    url: "https://github.com/cloudposse/terraform-example-module/releases/latest"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-tfe-cloud-infrastructure-automation.svg"
+    url: "https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
@@ -34,11 +34,6 @@ badges:
     image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
     url: "https://ask.sweetops.com/"
 
-# List any related terraform modules that this module may be used with or that this module depends on.
-related:
-  - name: "terraform-null-label"
-    description: "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention."
-    url: "https://github.com/cloudposse/terraform-null-label"
 
 # List any resources helpful for someone to get started. For example, link to the hashicorp documentation or AWS documentation.
 references:
@@ -57,8 +52,9 @@ references:
 
 # Short description of this project
 description: |-
-  This is `terraform-example-module` project provides all the scaffolding for a typical well-built Cloud Posse module. It's a template repository you can
-  use when creating new repositories.
+  This is `terraform-tfe-cloud-infrastructure-automation` project enables the provisioning of workspaces & configuration in Terraform Cloud via YAML configuration.
+
+  NOTE: Requires [Terraform Cloud Business or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing) subscription.
 
 # Introduction to the project
 #introduction: |-
@@ -69,16 +65,31 @@ usage: |-
   Here's how to invoke this example module in your projects
 
   ```hcl
+  provider "tfe" {
+    hostname = var.tfe_hostname
+    token    = var.tfe_token
+    version  = ">= 0.21.0"
+  }
+
   module "example" {
-    source = "https://github.com/cloudposse/terraform-example-module.git?ref=master"
-    example = "Hello world!"
+    source = "https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation.git?ref=master"
+
+    config_file_path = "config"
+    organization     = var.organization
+
+    vcs_repo = {
+      branch             = var.branch
+      identifier         = var.identifier
+      ingress_submodules = var.ingress_submodules
+      oauth_token_id     = var.oauth_token_id
+    }
   }
   ```
 
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-example-module/) - complete example of using this module
+  - [`examples/complete`](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/) - complete example of using this module
 
 # How to get started quickly
 #quickstart: |-
@@ -93,3 +104,5 @@ include:
 contributors:
   - name: "Erik Osterman"
     github: "osterman"
+  - name: "Dan Meyers"
+    github: "danjbh"
