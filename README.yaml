@@ -102,6 +102,8 @@ examples: |-
       # Used to determine the name of the workspace (e.g. the 'ue2' in 'ue2-testing')
       environment: ue2
 
+  # The configuration file format is designed to be used across multiple tools.
+  # All terraform projects should be listed under this section.
   terraform:
     # List one or more Terraform projects here
     first-project:
