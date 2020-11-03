@@ -118,7 +118,7 @@ examples: |-
       triggers:
         - uw2-testing-example2
         - gbl-root-example1
-      # Set the Terraform input variable values for this project
+      # Set the Terraform input variable values for this project. Complex types like maps and lists are supported.
       vars:
         my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
     second-project:
