@@ -79,7 +79,7 @@ usage: |-
     organization     = var.organization
 
     vcs_repo = {
-      branch             = var.branch
+      branch             = "main"
       identifier         = var.identifier
       ingress_submodules = var.ingress_submodules
       oauth_token_id     = var.oauth_token_id
