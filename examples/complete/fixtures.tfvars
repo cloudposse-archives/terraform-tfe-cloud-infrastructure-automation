@@ -10,7 +10,6 @@ name = "example"
 
 branch = "master"
 
-#identifier = "cloudposse/terraform-tfe-cloud-infrastructure-automation"
 identifier = "void"
 
 ingress_submodules = true

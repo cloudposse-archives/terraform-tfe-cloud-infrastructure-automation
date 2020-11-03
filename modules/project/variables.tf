@@ -56,3 +56,15 @@ variable "terraform_version" {
   description = "The version of Terraform to use for this workspace."
   default     = null
 }
+
+variable "auto_apply" {
+  type        = bool
+  description = "Controls the auto_apply flag within a Terraform workspace."
+  default     = false
+}
+
+variable "filename_trigger" {
+  type        = string
+  description = "Controls which file(s) will trigger workspace executions."
+  default     = "*.tf"
+}

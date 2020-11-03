@@ -33,4 +33,6 @@ module "projects" {
   vcs_repo              = var.vcs_repo
   terraform_version     = try(each.value.terraform_version, null)
   parent_workspace_id   = module.workspace.workspace.id
+  auto_apply            = try(each.value.auto_apply, false)
+  filename_trigger      = try(each.value.filename_trigger, "*.tf")
 }
