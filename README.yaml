@@ -117,6 +117,7 @@ examples: |-
       # Optional filename trigger to match (default is *.tf)
       filename_trigger: "*.*"
       # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
+      # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
       triggers:
         - uw2-testing-example2
         - gbl-root-example1
