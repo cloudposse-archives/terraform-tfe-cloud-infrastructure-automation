@@ -73,6 +73,7 @@ usage: |-
   module "example" {
     source = "https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation.git?ref=master"
 
+    # Directory containing all YAML configurations
     config_file_path = "config"
     organization     = var.organization
 
