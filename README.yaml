@@ -80,6 +80,7 @@ usage: |-
     vcs_repo = {
       branch             = "main"
       ingress_submodules = true
+      # We recommend exporting the `FOOBAR` environment variable instead of passing a variable
       oauth_token_id     = var.oauth_token_id
     }
   }
@@ -108,7 +109,7 @@ examples: |-
     # List one or more Terraform projects here
     first-project:
       # Controls whether or not this workspace should be created
-      # NOTE: If set to 'false', you cannot reference this workspace via a `trigger` in another workspace!
+      # NOTE: If set to 'false', you cannot reference this workspace via `triggers` in another workspace!
       workspace_enabled: true
       # Override the version of Terraform for this workspace (defaults to the latest in Terraform Cloud/Enterprise)
       terraform_version: 0.13.4

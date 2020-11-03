@@ -80,12 +80,14 @@ provider "tfe" {
 module "example" {
   source = "https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation.git?ref=master"
 
+  # Directory containing all YAML configurations
   config_file_path = "config"
   organization     = var.organization
 
   vcs_repo = {
     branch             = "main"
     ingress_submodules = true
+    # We recommend exporting the `FOOBAR` environment variable instead of passing a variable
     oauth_token_id     = var.oauth_token_id
   }
 }
@@ -99,21 +101,25 @@ module "example" {
 Here is an example of using this module:
 - [`examples/complete`](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/) - complete example of using this module
 
-And here is a YAML configuration file example (typically named `ue2-testing.yaml`):
+We use YAML for the configuration files in order to separate configuration settings from business-logic. It's also a portable format that can be used across multiple tools. Our convention is to name files by `$env-$stage.yaml` (e.g. `ue2-testing.yaml`), so for example an `$env` could be `ue2` (for `us-east-2`) and the `$stage` might be `testing`. Workspace names are derived from the `$env-$stage-$project`, which looks like  `ue2-testing-eks`.
 
 ```yaml
+# Projects are all the top-level root modules
 projects:
+  # Globals are exported as TF_VAR_... environment variables in every workspace
   globals:
     # Used to determine the name of the workspace (e.g. the 'testing' in 'ue2-testing')
     stage: testing
     # Used to determine the name of the workspace (e.g. the 'ue2' in 'ue2-testing')
     environment: ue2
 
+# The configuration file format is designed to be used across multiple tools.
+# All terraform projects should be listed under this section.
 terraform:
   # List one or more Terraform projects here
   first-project:
     # Controls whether or not this workspace should be created
-    # NOTE: If set to 'false', you cannot reference this workspace via a `trigger` in another workspace!
+    # NOTE: If set to 'false', you cannot reference this workspace via `triggers` in another workspace!
     workspace_enabled: true
     # Override the version of Terraform for this workspace (defaults to the latest in Terraform Cloud/Enterprise)
     terraform_version: 0.13.4
@@ -122,12 +128,14 @@ terraform:
     # Optional filename trigger to match (default is *.tf)
     filename_trigger: "*.*"
     # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
+    # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
     triggers:
       - uw2-testing-example2
       - gbl-root-example1
-    # Set the Terraform input variable values for this project
+    # Set the Terraform input variable values for this project. Complex types like maps and lists are supported.
     vars:
       my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
+  # Every project should be uniquely named and correspond to a folder in the `projects/` directory
   second-project:
     workspace_enabled: true
     # Specify a custom project folder (defalts to the project name if not specified)
