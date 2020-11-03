@@ -29,7 +29,7 @@
 
 This is `terraform-tfe-cloud-infrastructure-automation` project enables the provisioning of workspaces & configuration in Terraform Cloud via YAML configuration.
 
-NOTE: Requires [Terraform Cloud Business or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing) subscription.
+NOTE: Requires [Terraform Cloud or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing).
 
 
 ---
