@@ -113,35 +113,35 @@ projects:
     # Used to determine the name of the workspace (e.g. the 'ue2' in 'ue2-testing')
     environment: ue2
 
-# The configuration file format is designed to be used across multiple tools.
-# All terraform projects should be listed under this section.
-terraform:
-  # List one or more Terraform projects here
-  first-project:
-    # Controls whether or not this workspace should be created
-    # NOTE: If set to 'false', you cannot reference this workspace via `triggers` in another workspace!
-    workspace_enabled: true
-    # Override the version of Terraform for this workspace (defaults to the latest in Terraform Cloud/Enterprise)
-    terraform_version: 0.13.4
-    # Controls the `auto_apply` setting within this workspace
-    auto_apply: true
-    # Optional filename trigger to match (default is *.tf)
-    filename_trigger: "*.*"
-    # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
-    # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
-    triggers:
-      - uw2-testing-example2
-      - gbl-root-example1
-    # Set the Terraform input variable values for this project. Complex types like maps and lists are supported.
-    vars:
-      my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
-  # Every project should be uniquely named and correspond to a folder in the `projects/` directory
-  second-project:
-    workspace_enabled: true
-    # Specify a custom project folder (defalts to the project name if not specified)
-    custom_project_folder: my-custom-project-folder
-    vars:
-      my_input_var: "Hello world! This is another example!"
+  # The configuration file format is designed to be used across multiple tools.
+  # All terraform projects should be listed under this section.
+  terraform:
+    # List one or more Terraform projects here
+    first-project:
+      # Controls whether or not this workspace should be created
+      # NOTE: If set to 'false', you cannot reference this workspace via `triggers` in another workspace!
+      workspace_enabled: true
+      # Override the version of Terraform for this workspace (defaults to the latest in Terraform Cloud/Enterprise)
+      terraform_version: 0.13.4
+      # Controls the `auto_apply` setting within this workspace
+      auto_apply: true
+      # Optional filename trigger to match (default is *.tf)
+      filename_trigger: "*.*"
+      # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
+      # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
+      triggers:
+        - uw2-testing-example2
+        - gbl-root-example1
+      # Set the Terraform input variable values for this project. Complex types like maps and lists are supported.
+      vars:
+        my_input_var: "Hello world! This is a value that needs to be passed to my `first-project` Terraform project."
+    # Every project should be uniquely named and correspond to a folder in the `projects/` directory
+    second-project:
+      workspace_enabled: true
+      # Specify a custom project folder (defalts to the project name if not specified)
+      custom_project_folder: my-custom-project-folder
+      vars:
+        my_input_var: "Hello world! This is another example!"
 ```
 
 
