@@ -1,4 +1,5 @@
 variable "enabled" {
+  description = "Controls creation fo all resources in this module."
   default = false
   type    = bool
 }
@@ -10,7 +11,8 @@ variable "parent_workspace_id" {
 }
 
 variable "environment" {
-  type = string
+  description = "Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT'"
+  type        = string
 }
 
 variable "project_name" {
