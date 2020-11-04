@@ -53,7 +53,7 @@ references:
 
 # Short description of this project
 description: |-
-  This is `terraform-tfe-cloud-infrastructure-automation` project enables the provisioning of workspaces & configuration in Terraform Cloud via YAML configuration.
+  Terraform module to provision workspaces & configurations in Terraform Cloud via YAML configuration.
 
   NOTE: Requires [Terraform Cloud or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing).
 
