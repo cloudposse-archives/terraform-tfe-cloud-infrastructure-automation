@@ -5,7 +5,7 @@ variable "enabled" {
 }
 
 variable "parent_workspace_id" {
-  description = "For our run triggers."
+  description = "Parent workspace ID for run triggers."
   default     = null
   type        = string
 }

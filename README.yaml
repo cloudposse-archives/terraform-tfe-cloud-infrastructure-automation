@@ -53,7 +53,7 @@ references:
 
 # Short description of this project
 description: |-
-  This is `terraform-tfe-cloud-infrastructure-automation` project enables the provisioning of workspaces & configuration in Terraform Cloud via YAML configuration.
+  Terraform module to provision workspaces & configurations in Terraform Cloud via YAML configuration.
 
   NOTE: Requires [Terraform Cloud or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing).
 
@@ -91,7 +91,7 @@ examples: |-
   Here is an example of using this module:
   - [`examples/complete`](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/) - complete example of using this module
 
-  We use YAML for the configuration files in order to separate configuration settings from business-logic. It's also a portable format that can be used across multiple tools. Our convention is to name files by `$env-$stage.yaml` (e.g. `ue2-testing.yaml`), so for example an `$env` could be `ue2` (for `us-east-2`) and the `$stage` might be `testing`. Workspace names are derived from the `$env-$stage-$project`, which looks like  `ue2-testing-eks`.
+  We use YAML for the configuration files in order to separate configuration settings from business logic. It's also a portable format that can be used across multiple tools. Our convention is to name files by `$env-$stage.yaml` (e.g. `ue2-testing.yaml`), so for example an `$env` could be `ue2` (for `us-east-2`) and the `$stage` might be `testing`. Workspace names are derived from the `$env-$stage-$project`, which looks like  `ue2-testing-eks`.
   
   ```yaml
   # Projects are all the top-level root modules
