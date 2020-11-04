@@ -36,7 +36,7 @@ variable "organization" {
 }
 
 variable "projects_path" {
-  description = "Project directory repository-root-relative path"
+  description = "Project directory path relative to the repository root"
   type        = string
   default     = "projects"
 }
