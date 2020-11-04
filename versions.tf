@@ -1,8 +1,20 @@
 terraform {
-  required_version = ">= 0.12.0, < 0.14.0"
+  required_version = ">= 0.13.0"
 
   required_providers {
-    local  = "~> 1.2"
-    random = "~> 2.2"
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = ">= 0.21.0"
+    }
+
+    local = {
+      source  = "hashicorp/local"
+      version = ">= 1.4"
+    }
+
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 2.2"
+    }
   }
 }

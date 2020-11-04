@@ -17,3 +17,4 @@
 # Crash log files
 crash.log
 test.log
+.DS_Store

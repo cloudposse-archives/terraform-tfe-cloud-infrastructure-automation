@@ -1,14 +1,15 @@
-output "id" {
-  description = "ID of the created example"
-  value       = module.this.enabled ? module.this.id : null
+output "global_workspace" {
+  value       = module.tfc_config.workspace
+  description = "Configuration information for the global workspace."
 }
 
-output "example" {
-  description = "Example output"
-  value       = module.this.enabled ? local.example : null
+output "environment_workspaces" {
+  value       = local.environment_workspaces
+  description = "A list of environment workspaces & their configurations."
 }
 
-output "random" {
-  description = "Stable random number for this example"
-  value       = module.this.enabled ? join("", random_integer.example[*].result) : null
+output "project_workspaces" {
+  value       = local.project_workspaces
+  description = "A list of project workspaces & their configurations."
 }
+
