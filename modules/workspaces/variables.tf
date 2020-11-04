@@ -60,9 +60,8 @@ variable "trigger_prefixes" {
 
 variable "variables" {
   description = "Map of environment or Terraform variables to define in the workspace."
-  default = {
-  }
-  type = map(map(string))
+  default     = {}
+  type        = map(map(string))
 }
 
 variable "vcs_repo" {
