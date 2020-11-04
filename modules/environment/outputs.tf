@@ -1,7 +1,9 @@
 output "workspace" {
-  value = module.workspace.workspace
+  description = "List of all workspaces created."
+  value       = module.workspace.workspace
 }
 
 output "projects" {
-  value = module.projects
+  description = "List of all projects created."
+  value       = module.projects
 }
