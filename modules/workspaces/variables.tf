@@ -10,6 +10,7 @@ variable "file_triggers_enabled" {
 
 variable "name" {
   description = "Configuration File Name of the workspace"
+  type        = string
 }
 
 variable "notifications" {
