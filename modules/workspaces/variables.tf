@@ -32,6 +32,7 @@ variable "organization" {
 variable "queue_all_runs" {
   description = "Whether all runs should be queued. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued."
   default     = true
+  type        = bool
 }
 
 variable "ssh_key_id" {
@@ -48,6 +49,7 @@ variable "team_access" {
 variable "terraform_version" {
   description = "The version of Terraform to use for this workspace."
   default     = null
+  type        = string
 }
 
 variable "trigger_prefixes" {
