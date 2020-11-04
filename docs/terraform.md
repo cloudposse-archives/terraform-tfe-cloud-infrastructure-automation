@@ -32,7 +32,7 @@
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | organization | Name of the organization. | `string` | n/a | yes |
-| projects\_path | Project directory repository-root-relative path | `string` | `"projects"` | no |
+| projects\_path | Project directory path relative to the repository root | `string` | `"projects"` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
@@ -45,8 +45,8 @@
 
 | Name | Description |
 |------|-------------|
-| environment\_workspaces | n/a |
-| global\_workspace | n/a |
-| project\_workspaces | n/a |
+| environment\_workspaces | A list of environment workspaces & their configurations. |
+| global\_workspace | Configuration information for the global workspace. |
+| project\_workspaces | A list of project workspaces & their configurations. |
 
 <!-- markdownlint-restore -->

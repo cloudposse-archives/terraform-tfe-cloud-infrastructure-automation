@@ -27,7 +27,7 @@
 
 -->
 
-This is `terraform-tfe-cloud-infrastructure-automation` project enables the provisioning of workspaces & configuration in Terraform Cloud via YAML configuration.
+Terraform module to provision workspaces & configurations in Terraform Cloud via YAML configuration.
 
 NOTE: Requires [Terraform Cloud or Terraform Enterprise](https://www.hashicorp.com/products/terraform/pricing).
 
@@ -101,7 +101,7 @@ module "example" {
 Here is an example of using this module:
 - [`examples/complete`](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/) - complete example of using this module
 
-We use YAML for the configuration files in order to separate configuration settings from business-logic. It's also a portable format that can be used across multiple tools. Our convention is to name files by `$env-$stage.yaml` (e.g. `ue2-testing.yaml`), so for example an `$env` could be `ue2` (for `us-east-2`) and the `$stage` might be `testing`. Workspace names are derived from the `$env-$stage-$project`, which looks like  `ue2-testing-eks`.
+We use YAML for the configuration files in order to separate configuration settings from business logic. It's also a portable format that can be used across multiple tools. Our convention is to name files by `$env-$stage.yaml` (e.g. `ue2-testing.yaml`), so for example an `$env` could be `ue2` (for `us-east-2`) and the `$stage` might be `testing`. Workspace names are derived from the `$env-$stage-$project`, which looks like  `ue2-testing-eks`.
 
 ```yaml
 # Projects are all the top-level root modules
@@ -192,7 +192,7 @@ Available targets:
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | organization | Name of the organization. | `string` | n/a | yes |
-| projects\_path | Project directory repository-root-relative path | `string` | `"projects"` | no |
+| projects\_path | Project directory path relative to the repository root | `string` | `"projects"` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
@@ -205,9 +205,9 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
-| environment\_workspaces | n/a |
-| global\_workspace | n/a |
-| project\_workspaces | n/a |
+| environment\_workspaces | A list of environment workspaces & their configurations. |
+| global\_workspace | Configuration information for the global workspace. |
+| project\_workspaces | A list of project workspaces & their configurations. |
 
 <!-- markdownlint-restore -->
 
