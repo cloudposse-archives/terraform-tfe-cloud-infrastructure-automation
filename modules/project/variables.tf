@@ -1,7 +1,7 @@
 variable "enabled" {
   description = "Controls creation fo all resources in this module."
-  default = false
-  type    = bool
+  default     = false
+  type        = bool
 }
 
 variable "parent_workspace_id" {
