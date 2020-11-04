@@ -53,7 +53,7 @@ variable "terraform_version" {
 }
 
 variable "trigger_prefixes" {
-  description = "List of repository-root-relative paths which describe all locations to be tracked for changes. workspace. Defaults to the latest available version."
+  description = "List of paths relative to the repository root which describe all locations to be tracked for changes in the workspace."
   default     = null
   type        = list
 }
