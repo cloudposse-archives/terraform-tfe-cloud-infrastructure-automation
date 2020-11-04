@@ -1,10 +1,11 @@
 variable "branch" {
-  description = "A reference to your VCS repository in the format `:org/:repo` where `:org` and `:repo` refer to the organization and repository in your VCS provider."
+  description = "The repository branch that Terraform will execute from."
+  default     = "master"
   type        = string
 }
 
 variable "identifier" {
-  description = "The repository branch that Terraform will execute from. Default to `master`."
+  description = "A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider."
   type        = string
 }
 
