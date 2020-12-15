@@ -65,8 +65,8 @@ variable "auto_apply" {
   default     = false
 }
 
-variable "filename_trigger" {
-  type        = string
+variable "filename_triggers" {
+  type        = list(string)
   description = "Controls which file(s) will trigger workspace executions."
-  default     = "*.tf"
+  default     = []
 }
