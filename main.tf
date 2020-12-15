@@ -24,7 +24,7 @@ locals {
     }
   ]...)
 
-  custom_triggers = merge(flatten([
+  custom_triggers = merge({}, flatten([
     for k, v in local.projects : [
       for project, settings in v.terraform : {
         for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
