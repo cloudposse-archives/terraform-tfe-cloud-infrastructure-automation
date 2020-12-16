@@ -30,6 +30,11 @@ variable "global_values" {
   description = "Map of project-level Terraform variables"
 }
 
+variable "remote_execution_mode" {
+  type        = bool
+  description = "Indicates whether the workspace is using remote execution mode. Set to false to switch execution mode to local."
+}
+
 variable "organization" {
   type        = string
   description = "Name of the organization."

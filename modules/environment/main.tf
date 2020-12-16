@@ -30,6 +30,7 @@ module "projects" {
   project_values        = each.value.vars
   projects_path         = var.projects_path
   custom_project_folder = try(each.value.custom_project_folder, null)
+  remote_execution_mode = try(each.value.remote_execution_mode, true)
   vcs_repo              = var.vcs_repo
   terraform_version     = try(each.value.terraform_version, null)
   parent_workspace_id   = module.workspace.workspace.id

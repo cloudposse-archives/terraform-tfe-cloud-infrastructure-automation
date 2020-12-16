@@ -21,6 +21,7 @@ module "workspace" {
   vcs_repo              = var.vcs_repo
   working_directory     = "${var.projects_path}/${local.project_folder}"
   terraform_version     = var.terraform_version
+  operations            = var.remote_execution_mode
 }
 
 module "variables" {
