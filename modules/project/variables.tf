@@ -21,7 +21,7 @@ variable "project_name" {
 }
 
 variable "project_values" {
-  type        = map
+  type        = any
   description = "Map of project-level environment variables"
 }
 
