@@ -19,6 +19,7 @@ variable "sensitive" {
 }
 
 variable "variables" {
+  type        = any
   description = "Map of environment or Terraform variables to define in the workspace."
   default     = {}
 }
