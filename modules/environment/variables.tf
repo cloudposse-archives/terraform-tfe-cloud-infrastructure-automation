@@ -32,6 +32,12 @@ variable "organization" {
   description = "Name of the organization."
 }
 
+variable "terraform_version" {
+  default     = null
+  type        = string
+  description = "The top level terraform_version that is used if not overriden by the project."
+}
+
 variable "vcs_repo" {
   description = "The VCS repository to configure."
   default = {

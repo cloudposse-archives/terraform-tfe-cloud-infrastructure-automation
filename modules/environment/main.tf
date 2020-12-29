@@ -33,7 +33,7 @@ module "projects" {
   remote_execution_mode = try(each.value.remote_execution_mode, true)
   vcs_repo              = var.vcs_repo
   vcs_branch            = try(each.value.vcs_branch, null)
-  terraform_version     = try(each.value.terraform_version, null)
+  terraform_version     = try(each.value.terraform_version, var.terraform_version)
   parent_workspace_id   = module.workspace.workspace.id
   auto_apply            = try(each.value.auto_apply, false)
   filename_triggers     = try(each.value.filename_triggers, [])

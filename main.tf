@@ -57,12 +57,13 @@ module "tfc_environment" {
 
   for_each = local.projects
 
-  config_name   = each.key
-  global_values = each.value.globals
-  projects      = local.projects[each.key].terraform
-  projects_path = var.projects_path
-  organization  = var.organization
-  vcs_repo      = var.vcs_repo
+  config_name       = each.key
+  global_values     = each.value.globals
+  terraform_version = var.terraform_version
+  projects          = local.projects[each.key].terraform
+  projects_path     = var.projects_path
+  organization      = var.organization
+  vcs_repo          = var.vcs_repo
 }
 
 # Generate our custom triggers based on configuration defined in YAML (at the project level)
