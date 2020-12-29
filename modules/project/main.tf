@@ -19,6 +19,7 @@ module "workspace" {
   organization          = var.organization
   trigger_prefixes      = local.trigger_prefixes
   vcs_repo              = var.vcs_repo
+  vcs_branch            = var.vcs_branch
   working_directory     = "${var.projects_path}/${local.project_folder}"
   terraform_version     = var.terraform_version
   operations            = var.remote_execution_mode

@@ -58,6 +58,12 @@ variable "vcs_repo" {
   type        = map(string)
 }
 
+variable "vcs_branch" {
+  description = "Use this to override the branch you want your workspace to plan / apply against."
+  default     = null
+  type        = string
+}
+
 variable "terraform_version" {
   type        = string
   description = "The version of Terraform to use for this workspace."

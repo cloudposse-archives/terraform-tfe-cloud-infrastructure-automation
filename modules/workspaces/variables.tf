@@ -71,6 +71,12 @@ variable "vcs_repo" {
   type = map(string)
 }
 
+variable "vcs_branch" {
+  description = "Use this to override the branch you want your workspace to plan / apply against."
+  default     = null
+  type        = string
+}
+
 variable "working_directory" {
   description = "A relative path that Terraform will execute within. Defaults to the root of your repository."
   default     = null
