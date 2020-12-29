@@ -1,18 +1,18 @@
 locals {
   # We compute the values ahead of time to deal with ternary type conversion issues.
-  values = {
+  # The jsonencode / replaces below translate a JSON encoded string to proper HCL2
+  variables = merge(var.variables, {
     for key, val in var.variables :
-    key => (var.hcl ? replace(replace(jsonencode(val), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"") : val)
-  }
+    key => replace(replace(jsonencode(val), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"") if var.hcl
+  })
 }
 resource "tfe_variable" "this" {
-  for_each = var.variables
+  for_each = local.variables
 
-  category  = var.category
-  hcl       = var.hcl
-  key       = var.category == "env" ? "TF_VAR_${each.key}" : each.key
-  sensitive = var.sensitive
-  # translate a JSON encoded string to proper HCL2
-  value        = local.values[each.key]
+  category     = var.category
+  hcl          = var.hcl
+  key          = var.category == "env" ? "TF_VAR_${each.key}" : each.key
+  sensitive    = var.sensitive
+  value        = each.value
   workspace_id = var.workspace_id
 }
