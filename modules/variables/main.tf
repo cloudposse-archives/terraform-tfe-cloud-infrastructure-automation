@@ -6,6 +6,6 @@ resource "tfe_variable" "this" {
   key       = var.category == "env" ? "TF_VAR_${each.key}" : each.key
   sensitive = var.sensitive
   # translate a JSON encoded string to proper HCL2
-  value        = var.hcl ? replace(replace(jsonencode(each.value), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"") : each.value
+  value        = replace(replace(jsonencode(each.value), "/(\".*?\"):/", "$1 = "), "/= null/", "= \"\"")
   workspace_id = var.workspace_id
 }
