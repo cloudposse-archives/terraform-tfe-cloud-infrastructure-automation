@@ -34,8 +34,10 @@ variable "execution_mode" {
   type        = string
   description = "Indicates whether the workspace is applied remotely, locally, or via agent."
 
-  condition     = contains(["remote", "local", "agent"], var.execution_mode)
-  error_message = "The execution_mode value must be either `remote`, `local`, or `agent`."
+  validation {
+    condition     = contains(["remote", "local", "agent"], var.execution_mode)
+    error_message = "The execution_mode value must be either `remote`, `local`, or `agent`."
+  }
 }
 
 variable "organization" {
