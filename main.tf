@@ -49,6 +49,7 @@ module "tfc_config" {
   trigger_prefixes      = [basename(local.config_file_path)]
   vcs_repo              = var.vcs_repo
   working_directory     = "${var.projects_path}/${var.tfc_project_path}"
+  execution_mode        = "remote"
 }
 
 # Create our 2nd-tier environment workspaces, as well as our 3rd-tier project workspaces
