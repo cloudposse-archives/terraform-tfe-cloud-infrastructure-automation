@@ -4,7 +4,7 @@ resource "tfe_workspace" "this" {
 
   auto_apply            = var.auto_apply
   file_triggers_enabled = var.file_triggers_enabled
-  operations            = var.operations
+  execution_mode        = var.execution_mode
   queue_all_runs        = var.queue_all_runs
   ssh_key_id            = var.ssh_key_id
   terraform_version     = var.terraform_version

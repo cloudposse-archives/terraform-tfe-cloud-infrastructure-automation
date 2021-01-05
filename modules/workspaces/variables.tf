@@ -19,10 +19,14 @@ variable "notifications" {
   type        = map(object({ configuration = map(string), triggers = list(string) }))
 }
 
-variable "operations" {
-  description = "Whether to use remote execution mode. When set to false, the workspace will be used for state storage only. Defaults to `true`."
-  default     = true
-  type        = bool
+variable "execution_mode" {
+  type        = string
+  description = "Indicates whether the workspace is applied remotely, locally, or via agent."
+
+  validation {
+    condition     = contains(["remote", "local", "agent"], var.execution_mode)
+    error_message = "The execution_mode value must be either `remote`, `local`, or `agent`."
+  }
 }
 
 variable "organization" {
