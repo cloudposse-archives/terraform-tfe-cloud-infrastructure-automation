@@ -19,6 +19,8 @@ variable "sensitive" {
 }
 
 variable "variables" {
+  # NOTE: This is of type `any` to allow for a map of various, complex types.
+  # See issue #4 in this repository for full details.
   type        = any
   description = "Map of environment or Terraform variables to define in the workspace."
   default     = {}
