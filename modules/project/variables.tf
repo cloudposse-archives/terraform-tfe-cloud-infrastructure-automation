@@ -30,9 +30,12 @@ variable "global_values" {
   description = "Map of project-level Terraform variables"
 }
 
-variable "remote_execution_mode" {
-  type        = bool
-  description = "Indicates whether the workspace is using remote execution mode. Set to false to switch execution mode to local."
+variable "execution_mode" {
+  type        = string
+  description = "Indicates whether the workspace is applied remotely, locally, or via agent."
+
+  condition     = contains(["remote", "local", "agent"], var.execution_mode)
+  error_message = "The execution_mode value must be either `remote`, `local`, or `agent`."
 }
 
 variable "organization" {

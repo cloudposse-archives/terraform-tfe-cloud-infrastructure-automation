@@ -30,7 +30,7 @@ module "projects" {
   project_values        = each.value.vars
   projects_path         = var.projects_path
   custom_project_folder = try(each.value.custom_project_folder, null)
-  remote_execution_mode = try(each.value.remote_execution_mode, true)
+  execution_mode        = try(each.value.execution_mode, "remote")
   vcs_repo              = var.vcs_repo
   vcs_branch            = try(each.value.vcs_branch, null)
   terraform_version     = try(each.value.terraform_version, var.terraform_version)
