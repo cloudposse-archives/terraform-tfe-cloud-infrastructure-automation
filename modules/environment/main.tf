@@ -7,6 +7,7 @@ module "workspace" {
   organization          = var.organization
   trigger_prefixes      = ["${var.config_directory}/${var.config_name}.yaml"]
   vcs_repo              = var.vcs_repo
+  execution_mode        = "remote"
 }
 
 module "variables" {
