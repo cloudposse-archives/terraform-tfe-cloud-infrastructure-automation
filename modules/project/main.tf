@@ -1,7 +1,6 @@
 locals {
   project_folder = coalesce(var.custom_project_folder, var.project_name)
 
-  default_trigger_prefix = "${var.projects_path}/${local.project_folder}/*.tf"
   trigger_prefixes = [
     for prefix in var.filename_triggers :
     "${var.projects_path}/${local.project_folder}/${prefix}"
