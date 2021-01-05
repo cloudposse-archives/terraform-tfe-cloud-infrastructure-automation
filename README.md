@@ -134,8 +134,9 @@ projects:
       terraform_version: 0.13.4
       # Controls the `auto_apply` setting within this workspace
       auto_apply: true
-      # Optional filename trigger to match (default is *.tf)
-      filename_trigger: "*.*"
+      # Optional filename triggers to match (default is *.tf)
+      filename_triggers:
+        - "*.*"
       # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
       # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
       triggers:
