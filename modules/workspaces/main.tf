@@ -15,7 +15,7 @@ resource "tfe_workspace" "this" {
     for_each = lookup(var.vcs_repo, "identifier", "void") == "void" ? [] : [var.vcs_repo]
 
     content {
-      branch             = var.vcs_branch == null ? var.vcs_repo.branch : var.vcs_branch
+      branch             = var.vcs_branch_override == null ? var.vcs_repo.branch : var.vcs_branch_override
       identifier         = var.vcs_repo.identifier
       ingress_submodules = var.vcs_repo.ingress_submodules
       oauth_token_id     = var.vcs_repo.oauth_token_id

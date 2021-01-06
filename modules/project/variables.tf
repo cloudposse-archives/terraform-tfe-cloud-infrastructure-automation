@@ -65,7 +65,7 @@ variable "vcs_repo" {
   type        = map(string)
 }
 
-variable "vcs_branch" {
+variable "vcs_branch_override" {
   description = "Use this to override the branch you want your workspace to plan / apply against."
   default     = null
   type        = string
