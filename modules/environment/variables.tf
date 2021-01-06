@@ -10,7 +10,7 @@ variable "config_directory" {
 }
 
 variable "global_values" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "The global values applied to all workspaces within the environment."
 }

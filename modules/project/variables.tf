@@ -28,7 +28,7 @@ variable "project_values" {
 }
 
 variable "global_values" {
-  type        = map
+  type        = map(any)
   description = "Map of project-level Terraform variables"
 }
 
