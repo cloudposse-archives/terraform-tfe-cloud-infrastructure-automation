@@ -36,7 +36,7 @@ func TestExamplesComplete(t *testing.T) {
 
 	globalWorkspaces := terraform.OutputMapOfObjects(t, terraformOptions, "global_workspaces")
 	assert.NotEmpty(t, globalWorkspaces)
-	assert.NotEmpty(t, globalWorkspaces["glb-root-example1"])
+	assert.NotEmpty(t, globalWorkspaces["gbl-root-example1"])
 
 	projectWorkspaces := terraform.OutputMapOfObjects(t, terraformOptions, "project_workspaces")
 	assert.NotEmpty(t, projectWorkspaces)
