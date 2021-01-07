@@ -176,13 +176,13 @@ Available targets:
 | terraform | >= 0.13.0 |
 | local | >= 1.4 |
 | random | >= 2.2 |
-| tfe | >= 0.21.0 |
+| tfe | >= 0.23.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| tfe | >= 0.21.0 |
+| tfe | >= 0.23.0 |
 
 ## Inputs
 
