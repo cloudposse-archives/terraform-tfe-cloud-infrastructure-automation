@@ -35,4 +35,6 @@ module "projects" {
   parent_workspace_id   = module.workspace.workspace.id
   auto_apply            = try(each.value.auto_apply, false)
   filename_trigger      = try(each.value.filename_trigger, "*.tf")
+
+  context = module.this.context
 }

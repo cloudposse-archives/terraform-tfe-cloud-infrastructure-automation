@@ -1,17 +1,6 @@
-variable "enabled" {
-  description = "Controls creation fo all resources in this module."
-  default     = false
-  type        = bool
-}
-
 variable "parent_workspace_id" {
   description = "Parent workspace ID for run triggers."
   default     = null
-  type        = string
-}
-
-variable "environment" {
-  description = "Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT'"
   type        = string
 }
 
@@ -21,12 +10,12 @@ variable "project_name" {
 }
 
 variable "project_values" {
-  type        = map
+  type        = map(any)
   description = "Map of project-level environment variables"
 }
 
 variable "global_values" {
-  type        = map
+  type        = map(any)
   description = "Map of project-level Terraform variables"
 }
 

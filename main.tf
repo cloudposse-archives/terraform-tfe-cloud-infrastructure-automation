@@ -63,6 +63,8 @@ module "tfc_environment" {
   projects_path = var.projects_path
   organization  = var.organization
   vcs_repo      = var.vcs_repo
+
+  context = module.this.context
 }
 
 # Generate our custom triggers based on configuration defined in YAML (at the project level)
