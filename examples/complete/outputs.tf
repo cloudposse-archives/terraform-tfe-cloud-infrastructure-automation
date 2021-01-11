@@ -10,10 +10,10 @@ output "global_workspace_id" {
 
 output "environment_workspaces_ids" {
   description = "Environment workspaces ids"
-  value       = module.example.environment_workspaces
+  value       = module.example.environment_workspaces.*.workspace.id
 }
 
 output "project_workspaces_ids" {
   description = "Environment workspaces ids"
-  value       = module.example.project_workspaces
+  value       = module.example.project_workspaces.*.workspace.id
 }
