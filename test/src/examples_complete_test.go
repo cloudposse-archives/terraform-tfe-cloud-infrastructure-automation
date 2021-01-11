@@ -25,18 +25,20 @@ func TestExamplesComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
-	environmentWorkspacesIds := terraform.OutputList(t, terraformOptions, "environment_workspaces_ids")
+	environmentWorkspacesIds := terraform.OutputMapOfObjects(t, terraformOptions, "environment_workspaces_ids")
 	globalWorkspaceId := terraform.Output(t, terraformOptions, "global_workspace_id")
-	projectWorkspacesIds := terraform.OutputList(t, terraformOptions, "project_workspaces_ids")
+	projectWorkspacesIds := terraform.OutputMapOfObjects(t, terraformOptions, "project_workspaces_ids")
 
 	// Verify we're getting back the outputs we expect
 	// Ensure we get a random number appended
 
   assert.Regexp(t, "^ws-\\w{16}$", globalWorkspaceId)
   if assert.NotEmpty(t, environmentWorkspacesIds) {
-	  for _, item := range environmentWorkspacesIds {
-      assert.Regexp(t, "^ws-\\w{16}$", item)
-		}
+    assert.Regexp(t, "^ws-\\w{16}$", environmentWorkspacesIds["id"])
+
+// 	  for _, item := range environmentWorkspacesIds {
+//       assert.Regexp(t, "^ws-\\w{16}$", item)
+// 		}
 	}
   if assert.NotEmpty(t, projectWorkspacesIds) {
 	  for _, item := range projectWorkspacesIds {
