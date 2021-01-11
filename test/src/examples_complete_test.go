@@ -1,8 +1,6 @@
 package test
 
 import (
-	"math/rand"
-	"strconv"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -13,20 +11,12 @@ import (
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
 
-	randId := strconv.Itoa(rand.Intn(100000))
-	attributes := []string{randId}
-
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "../../examples/complete",
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"fixtures.us-east-2.tfvars"},
-		// We always include a random attribute so that parallel tests
-		// and AWS resources do not interfere with each other
-		Vars: map[string]interface{}{
-			"attributes": attributes,
-		},
 	}
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
 	defer terraform.Destroy(t, terraformOptions)
@@ -35,13 +25,13 @@ func TestExamplesComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
-	globalWorkspace := terraform.Output(t, terraformOptions, "global_workspace")
-	environmentWorkspaces := terraform.Output(t, terraformOptions, "environment_workspaces")
-	projectWorkspaces := terraform.Output(t, terraformOptions, "project_workspaces")
+	example := terraform.OutputMapOfObjects(t, terraformOptions, "example")
 
 	// Verify we're getting back the outputs we expect
 	// Ensure we get a random number appended
-	assert.Equal(t, "eg-ue2-test-example-"+randId, globalWorkspace)
-	assert.Equal(t, "eg-ue2-test-example-"+randId, environmentWorkspaces)
-	assert.Equal(t, "eg-ue2-test-example-"+randId, projectWorkspaces)
+	if assert.NotEmpty(t, example) {
+    assert.NotEmpty(t, example["global_workspace"])
+    assert.NotEmpty(t, example["environment_workspaces"])
+    assert.NotEmpty(t, example["project_workspaces"])
+  }
 }
