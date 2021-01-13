@@ -34,13 +34,15 @@ func TestExamplesComplete(t *testing.T) {
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
 
-	globalWorkspaces := terraform.OutputMapOfObjects(t, terraformOptions, "global_workspaces")
-	assert.NotEmpty(t, globalWorkspaces)
-	assert.NotEmpty(t, globalWorkspaces["glb-root-example1"])
+	globalWorkspace := terraform.OutputMap(t, terraformOptions, "global_workspace")
+	assert.NotEmpty(t, globalWorkspace)
+	assert.NotEmpty(t, globalWorkspace["name"])
 
-	projectWorkspaces := terraform.OutputMapOfObjects(t, terraformOptions, "project_workspaces")
+	projectWorkspaces := terraform.OutputMap(t, terraformOptions, "project_workspaces")
 	assert.NotEmpty(t, projectWorkspaces)
+	assert.NotEmpty(t, projectWorkspaces["gbl-root-example1"])
 
-	envWorkspaces := terraform.OutputMapOfObjects(t, terraformOptions, "environment_workspaces")
+	envWorkspaces := terraform.OutputMap(t, terraformOptions, "environment_workspaces")
 	assert.NotEmpty(t, envWorkspaces)
+	assert.NotEmpty(t, envWorkspaces["gbl-root"])
 }
