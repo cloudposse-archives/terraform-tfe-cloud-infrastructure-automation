@@ -1,3 +1,7 @@
+locals {
+  default_execution_mode = "remote"
+}
+
 module "workspace" {
   source = "../workspaces"
 
@@ -7,7 +11,7 @@ module "workspace" {
   organization          = var.organization
   trigger_prefixes      = ["${var.config_directory}/${var.config_name}.yaml"]
   vcs_repo              = var.vcs_repo
-  execution_mode        = "remote"
+  execution_mode        = local.default_execution_mode
 }
 
 module "variables" {
@@ -31,7 +35,7 @@ module "projects" {
   project_values        = each.value.vars
   projects_path         = var.projects_path
   custom_project_folder = try(each.value.custom_project_folder, null)
-  execution_mode        = try(each.value.execution_mode, "remote")
+  execution_mode        = try(each.value.execution_mode, local.default_execution_mode)
   vcs_repo              = var.vcs_repo
   vcs_branch_override   = try(each.value.vcs_branch_override, null)
   terraform_version     = try(each.value.terraform_version, var.terraform_version)
