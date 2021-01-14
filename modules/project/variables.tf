@@ -21,13 +21,25 @@ variable "project_name" {
 }
 
 variable "project_values" {
-  type        = map
+  # NOTE: This is of type `any` to allow for a map of various, complex types.
+  # See issue #4 in this repository for full details.
+  type        = any
   description = "Map of project-level environment variables"
 }
 
 variable "global_values" {
-  type        = map
+  type        = map(any)
   description = "Map of project-level Terraform variables"
+}
+
+variable "execution_mode" {
+  type        = string
+  description = "Indicates whether the workspace is applied remotely, locally, or via agent."
+
+  validation {
+    condition     = contains(["remote", "local", "agent"], var.execution_mode)
+    error_message = "The execution_mode value must be either `remote`, `local`, or `agent`."
+  }
 }
 
 variable "organization" {
@@ -53,6 +65,12 @@ variable "vcs_repo" {
   type        = map(string)
 }
 
+variable "vcs_branch_override" {
+  description = "Use this to override the branch you want your workspace to plan / apply against."
+  default     = null
+  type        = string
+}
+
 variable "terraform_version" {
   type        = string
   description = "The version of Terraform to use for this workspace."
@@ -65,8 +83,8 @@ variable "auto_apply" {
   default     = false
 }
 
-variable "filename_trigger" {
-  type        = string
+variable "filename_triggers" {
+  type        = list(string)
   description = "Controls which file(s) will trigger workspace executions."
-  default     = "*.tf"
+  default     = []
 }

@@ -1,6 +1,8 @@
+<!-- markdownlint-disable -->
 # terraform-tfe-cloud-infrastructure-automation
 
  [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-tfe-cloud-infrastructure-automation.svg)](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com) [![Discourse Forum](https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg)](https://ask.sweetops.com/)
+<!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
 
@@ -66,8 +68,15 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 ## Usage
 
 
-**IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-tfe-cloud-infrastructure-automation/releases).
+**IMPORTANT:** We do not pin modules to versions in our examples because of the
+difficulty of keeping the versions in the documentation in sync with the latest released versions.
+We highly recommend that in your code you pin the version to the exact version you are
+using so that your infrastructure remains stable, and update versions in a
+systematic way so that they do not catch you by surprise.
+
+Also, because of a bug in the Terraform registry ([hashicorp/terraform#21417](https://github.com/hashicorp/terraform/issues/21417)),
+the registry shows many of our inputs as required when in fact they are optional.
+The table below correctly indicates which inputs are required.
 
 
 Here's how to invoke this example module in your projects:
@@ -125,8 +134,9 @@ projects:
       terraform_version: 0.13.4
       # Controls the `auto_apply` setting within this workspace
       auto_apply: true
-      # Optional filename trigger to match (default is *.tf)
-      filename_trigger: "*.*"
+      # Optional filename triggers to match (default is *.tf)
+      filename_triggers:
+        - "*.*"
       # Add extra 'Run Triggers' to this workspace, beyond the parent workspace, which is created by default
       # These triggers mean this project workspace will be automatically planned if any of these workspaces are applied.
       triggers:
@@ -166,13 +176,13 @@ Available targets:
 | terraform | >= 0.13.0 |
 | local | >= 1.4 |
 | random | >= 2.2 |
-| tfe | >= 0.21.0 |
+| tfe | >= 0.23.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| tfe | >= 0.21.0 |
+| tfe | >= 0.23.0 |
 
 ## Inputs
 
@@ -310,7 +320,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyrights
 
-Copyright © 2020-2020 [Cloud Posse, LLC](https://cloudposse.com)
+Copyright © 2020-2021 [Cloud Posse, LLC](https://cloudposse.com)
 
 
 
@@ -369,8 +379,10 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 ### Contributors
 
+<!-- markdownlint-disable -->
 |  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Dan Meyers][danjbh_avatar]][danjbh_homepage]<br/>[Dan Meyers][danjbh_homepage] |
 |---|---|
+<!-- markdownlint-restore -->
 
   [osterman_homepage]: https://github.com/osterman
   [osterman_avatar]: https://img.cloudposse.com/150x150/https://github.com/osterman.png

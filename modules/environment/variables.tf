@@ -10,7 +10,7 @@ variable "config_directory" {
 }
 
 variable "global_values" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "The global values applied to all workspaces within the environment."
 }
@@ -30,6 +30,12 @@ variable "projects_path" {
 variable "organization" {
   type        = string
   description = "Name of the organization."
+}
+
+variable "terraform_version" {
+  default     = null
+  type        = string
+  description = "The top level terraform_version that is used if not overriden by the project."
 }
 
 variable "vcs_repo" {
