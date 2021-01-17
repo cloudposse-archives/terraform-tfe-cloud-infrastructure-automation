@@ -1,0 +1,2 @@
+vars:
+  global_example_var: "Hello world! This is a global variable!"

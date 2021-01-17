@@ -1,8 +1,11 @@
-projects:
-  globals:
-    stage: testing
-    environment: uw2
+import:
+  - uw2-globals
 
+vars:
+  stage: testing
+  environment: uw2
+
+components:
   terraform:
     example2:
       workspace_enabled: true
@@ -10,7 +13,5 @@ projects:
         my_input_var: "Hello world! This is example1. It's disabled!"
     example3:
       workspace_enabled: true
-      triggers:
-        - gbl-root-example1
       vars:
         my_input_var: "Hello world! This is example2. This project contains a custom trigger!"

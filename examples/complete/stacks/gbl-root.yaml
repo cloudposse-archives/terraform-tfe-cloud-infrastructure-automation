@@ -1,0 +1,14 @@
+import:
+  - globals
+
+vars:
+  stage: testing
+  environment: gbl
+
+components:
+  terraform:
+    example1:
+      workspace_enabled: true
+      custom_project_folder: example1-custom
+      vars:
+        my_input_var: Hello world! This is example1!

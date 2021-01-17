@@ -1,18 +1,16 @@
-projects:
-  globals:
-    stage: testing
-    environment: ue2
+import:
+  - gbl-root.yaml
+  - ue2-globals.yaml
 
+vars:
+  stage: testing
+  environment: ue2
+
+components:
   terraform:
     example2:
       workspace_enabled: true
       terraform_version: 0.13.4
       auto_apply: true
-      # Optional filename triggers to match (default is *.tf)
-      filename_triggers:
-        - "*.*"
-      triggers:
-        - uw2-testing-example2
-        - gbl-root-example1
       vars:
         my_input_var: "Hello world! This is example2. This project uses a different version of Terraform and contains custom triggers!"

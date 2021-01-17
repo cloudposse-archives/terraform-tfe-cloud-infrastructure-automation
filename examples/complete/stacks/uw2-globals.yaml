@@ -1,0 +1,11 @@
+import:
+  - gbl-root
+
+vars:
+  environment: "uw2"
+  another_env_var: "it works again!"
+
+terraform:
+  vars:
+    e2: "uw2"
+    a2: "it works again!"
