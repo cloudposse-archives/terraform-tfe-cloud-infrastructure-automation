@@ -22,8 +22,18 @@ locals {
   // Result ex: { gbl-audit = { globals = { ... }, terraform = { project1 = { vars = ... }, project2 = { vars = ... } } } }
   projects = {
     for f in keys(local.config_files) : f => {
-      "compoonents" = lookup(lookup(local.config_files[f].map_configs, "components", {}), "terraform", {}),
-      "triggers" = lookup(local.config_files[f], "all_imports_list", [])
+      "components" = lookup(lookup(local.config_files[f].map_configs, "components", {}), "terraform", {}),
+      "triggers" = lookup(local.config_files[f], "all_imports_list", []),
+      "globals" = lookup(lookup(local.config_files[f], "terraform", {}), "vars", {}),
+    }
+  }
+
+  environment_workspaces = {
+    for k, v in module.tfc_environment : k => {
+      "workspace" = v.workspace,
+      "projects" = [
+        for project_name, project_values in v : project_name
+      ]
     }
   }
 
@@ -36,7 +46,7 @@ locals {
 
   custom_triggers = merge({}, flatten([
     for k, v in local.projects : [
-      for project, settings in v.terraform : {
+      for project, settings in v : {
         for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
         "${k}-${project}-${trigger}" => {
           source      = trigger
@@ -46,26 +56,6 @@ locals {
     ]
   ])...)
 }
-
-output "config" {
-  value = module.config_files
-}
-
-output "config_files" {
-  value = local.config_file_path
-}
-
-output "projects" {
-  value = local.projects
-}
-
-# output "project_workspaces" {
-#   value = local.project_workspaces
-# }
-
-# output "environment_workspaces" {
-#   value = local.environment_workspaces
-# }
 
 # Create our top-level workspace
 module "tfc_config" {
@@ -83,25 +73,25 @@ module "tfc_config" {
 }
 
 # Create our 2nd-tier environment workspaces, as well as our 3rd-tier project workspaces
-# module "tfc_environment" {
-#   source = "./modules/environment"
+module "tfc_environment" {
+  source = "./modules/environment"
 
-#   for_each = local.projects
+  for_each = local.projects
 
-#   config_name       = each.key
-#   global_values     = each.value.globals
-#   terraform_version = var.terraform_version
-#   projects          = local.projects[each.key].terraform
-#   projects_path     = var.projects_path
-#   organization      = var.organization
-#   vcs_repo          = var.vcs_repo
-# }
+  config_name       = each.key
+  global_values     = local.projects[each.key].globals
+  terraform_version = var.terraform_version
+  projects          = local.projects[each.key].components
+  projects_path     = var.projects_path
+  organization      = var.organization
+  vcs_repo          = var.vcs_repo
+}
 
-# # Generate our custom triggers based on configuration defined in YAML (at the project level)
-# resource "tfe_run_trigger" "this" {
-#   for_each = local.custom_triggers
+# Generate our custom triggers based on configuration defined in YAML (at the project level)
+resource "tfe_run_trigger" "this" {
+  for_each = local.custom_triggers
 
-#   # We link the trigger to another 3rd tier project workspace, OR a 2nd tier environment workspace
-#   workspace_id  = local.project_workspaces[each.value.destination].workspace.id
-#   sourceable_id = try(local.project_workspaces[each.value.source].workspace.id, local.environment_workspaces[each.value.source].workspace.id)
-# }
+  # We link the trigger to another 3rd tier project workspace, OR a 2nd tier environment workspace
+  workspace_id  = local.project_workspaces[each.value.destination].workspace.id
+  sourceable_id = try(local.project_workspaces[each.value.source].workspace.id, local.environment_workspaces[each.value.source].workspace.id)
+}

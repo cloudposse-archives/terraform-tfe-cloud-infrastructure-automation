@@ -2,14 +2,13 @@
 provider "tfe" {
   hostname = var.tfe_hostname
   token    = var.tfe_token
-  version  = ">= 0.23.0"
 }
 
 module "example" {
   source = "../../"
 
   config_file_path    = "./stacks"
-  config_file_pattern = "uw2-testing.yaml"
+  config_file_pattern = "u*.yaml"
   organization        = var.organization
 
   vcs_repo = {
