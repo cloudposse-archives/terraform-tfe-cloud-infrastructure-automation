@@ -27,33 +27,24 @@ locals {
     }
   }
 
-  # environment_workspaces = {
-  #   for k, v in module.tfc_environment : k => {
-  #     "workspace" = v.workspace,
-  #     "projects" = [
-  #       for project_name, project_values in v.projects : project_name
-  #     ]
-  #   }
-  # }
+  project_workspaces = merge([
+    for k, v in module.tfc_environment : {
+      for env, config in v.projects :
+      "${k}-${env}" => config
+    }
+  ]...)
 
-  # project_workspaces = merge([
-  #   for k, v in module.tfc_environment : {
-  #     for env, config in v.projects :
-  #     "${k}-${env}" => config
-  #   }
-  # ]...)
-
-  # custom_triggers = merge({}, flatten([
-  #   for k, v in local.projects : [
-  #     for project, settings in v.terraform : {
-  #       for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
-  #       "${k}-${project}-${trigger}" => {
-  #         source      = trigger
-  #         destination = "${k}-${project}"
-  #       } if try(settings.workspace_enabled, false)
-  #     }
-  #   ]
-  # ])...)
+  custom_triggers = merge({}, flatten([
+    for k, v in local.projects : [
+      for project, settings in v.terraform : {
+        for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
+        "${k}-${project}-${trigger}" => {
+          source      = trigger
+          destination = "${k}-${project}"
+        } if try(settings.workspace_enabled, false)
+      }
+    ]
+  ])...)
 }
 
 output "config" {
