@@ -1,3 +1,9 @@
+variable "agent_pool_id" {
+  type = string
+  description = "ID of the Terraform Cloud agent pool. If set, `execution_mode` is ignored and `agent` is used."
+  default = null
+}
+
 variable "enabled" {
   description = "Controls creation fo all resources in this module."
   default     = false

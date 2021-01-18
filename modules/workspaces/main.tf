@@ -2,9 +2,10 @@ resource "tfe_workspace" "this" {
   name         = var.name
   organization = var.organization
 
+  agent_pool_id         = var.agent_pool_id
   auto_apply            = var.auto_apply
   file_triggers_enabled = var.file_triggers_enabled
-  execution_mode        = var.execution_mode
+  execution_mode        = var.agent_pool_id != null ? "agent" : var.execution_mode
   queue_all_runs        = var.queue_all_runs
   ssh_key_id            = var.ssh_key_id
   terraform_version     = var.terraform_version

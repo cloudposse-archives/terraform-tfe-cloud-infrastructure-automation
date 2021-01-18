@@ -78,6 +78,7 @@ module "tfc_environment" {
 
   for_each = local.projects
 
+  agent_pool_id     = var.agent_pool_id
   config_name       = each.key
   global_values     = local.projects[each.key].globals
   terraform_version = var.terraform_version

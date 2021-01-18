@@ -7,6 +7,8 @@ provider "tfe" {
 module "example" {
   source = "../../"
 
+  # Uncomment this to use a specific agent pool
+  # agent_pool_id       = "ap-xxxyyyzzz"
   config_file_path    = "./stacks"
   config_file_pattern = "u*.yaml"
   organization        = var.organization

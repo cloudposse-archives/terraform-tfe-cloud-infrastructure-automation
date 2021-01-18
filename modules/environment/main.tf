@@ -5,13 +5,14 @@ locals {
 module "workspace" {
   source = "../workspaces"
 
+  agent_pool_id         = var.agent_pool_id
   auto_apply            = true
+  execution_mode        = local.default_execution_mode
   file_triggers_enabled = true
   name                  = var.config_name
   organization          = var.organization
   trigger_prefixes      = ["${var.config_directory}/${var.config_name}"]
   vcs_repo              = var.vcs_repo
-  execution_mode        = local.default_execution_mode
 }
 
 module "variables" {
@@ -27,19 +28,20 @@ module "projects" {
 
   for_each = var.projects
 
+  agent_pool_id         = var.agent_pool_id
+  auto_apply            = try(each.value.auto_apply, false)
+  custom_project_folder = try(each.value.custom_project_folder, null)
   enabled               = try(each.value.workspace_enabled, false)
-  organization          = var.organization
   environment           = module.workspace.workspace.name
+  execution_mode        = try(each.value.execution_mode, local.default_execution_mode)
+  filename_triggers     = try(each.value.filename_triggers, [])
   global_values         = var.global_values
+  organization          = var.organization
+  parent_workspace_id   = module.workspace.workspace.id
   project_name          = each.key
   project_values        = each.value.vars
   projects_path         = var.projects_path
-  custom_project_folder = try(each.value.custom_project_folder, null)
-  execution_mode        = try(each.value.execution_mode, local.default_execution_mode)
-  vcs_repo              = var.vcs_repo
-  vcs_branch_override   = try(each.value.vcs_branch_override, null)
   terraform_version     = try(each.value.terraform_version, var.terraform_version)
-  parent_workspace_id   = module.workspace.workspace.id
-  auto_apply            = try(each.value.auto_apply, false)
-  filename_triggers     = try(each.value.filename_triggers, [])
+  vcs_branch_override   = try(each.value.vcs_branch_override, null)
+  vcs_repo              = var.vcs_repo
 }

@@ -12,6 +12,7 @@ module "workspace" {
 
   count = var.enabled ? 1 : 0
 
+  agent_pool_id         = var.agent_pool_id
   auto_apply            = var.auto_apply
   file_triggers_enabled = true
   name                  = "${var.environment}-${var.project_name}"

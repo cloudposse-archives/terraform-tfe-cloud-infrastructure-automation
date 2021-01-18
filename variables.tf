@@ -1,3 +1,9 @@
+variable "agent_pool_id" {
+  type = string
+  description = "ID of the Terraform Cloud agent pool. If set, `execution_mode` is ignored and `agent` is used."
+  default = null
+}
+
 variable "top_level_workspace" {
   type        = string
   description = "Name of the top-level configuration workspace in Terraform Cloud"
