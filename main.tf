@@ -7,13 +7,13 @@ locals {
 }
 
 module "config_files" {
-  source   = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=main"
+  source   = "git::https://github.com/cloudposse/terraform-yaml-stack-config.git?ref=init"
   for_each = local.config_filenames
 
   context = module.this.context
 
-  map_config_local_base_path = local.config_file_path
-  map_config_paths           = [each.value]
+  stack_config_local_base_path = local.config_file_path
+  stack_config_paths           = [each.value]
 }
 
 locals {
@@ -22,7 +22,7 @@ locals {
   // Result ex: { gbl-audit = { globals = { ... }, terraform = { project1 = { vars = ... }, project2 = { vars = ... } } } }
   projects = {
     for f in keys(local.config_files) : f => {
-      "components" = lookup(lookup(local.config_files[f].map_configs, "components", {}), "terraform", {}),
+      "components" = lookup(lookup(local.config_files[f].config, "components", {}), "terraform", {}),
       "triggers" = lookup(local.config_files[f], "all_imports_list", []),
       "globals" = lookup(lookup(local.config_files[f], "terraform", {}), "vars", {}),
     }
