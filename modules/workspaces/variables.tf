@@ -1,7 +1,7 @@
 variable "agent_pool_id" {
-  type = string
+  type        = string
   description = "ID of the Terraform Cloud agent pool. If set, `execution_mode` is ignored and `agent` is used."
-  default = null
+  default     = null
 }
 
 variable "auto_apply" {
