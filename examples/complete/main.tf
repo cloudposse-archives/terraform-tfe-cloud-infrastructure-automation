@@ -10,7 +10,7 @@ module "example" {
   # Uncomment this to use a specific agent pool
   # agent_pool_id       = "ap-xxxyyyzzz"
   config_file_path    = "./stacks"
-  config_file_pattern = "u*.yaml"
+  config_file_pattern = "u*-testing.yaml"
   organization        = var.organization
 
   vcs_repo = {

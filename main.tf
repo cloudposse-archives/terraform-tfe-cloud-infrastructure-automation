@@ -7,19 +7,26 @@ locals {
 }
 
 module "config_files" {
-  source   = "git::https://github.com/cloudposse/terraform-yaml-stack-config.git?ref=0.5.0"
+  source = "cloudposse/stack-config/yaml"
+  # Cloud Posse recommends pinning every module to a specific version
+  version     = "0.5.0"
+
   for_each = local.config_filenames
 
   context = module.this.context
 
   stack_config_local_path = local.config_file_path
-  stack                   = each.value
+  stack                   = trimsuffix(basename(each.value), ".yaml")
+}
+
+output "config_files" {
+  value = local.config_files
 }
 
 locals {
-  // Result ex: [gbl-audit, gbl-auto, gbl-dev, ...]
+  // Result ex: TODO
   config_files = { for f in keys(module.config_files) : trimsuffix(basename(f), ".yaml") => module.config_files[f] }
-  // Result ex: { gbl-audit = { globals = { ... }, terraform = { project1 = { vars = ... }, project2 = { vars = ... } } } }
+  // Result ex: TODO
   projects = {
     for f in keys(local.config_files) : f => {
       "components" = lookup(lookup(local.config_files[f].config, "components", {}), "terraform", {}),
@@ -81,6 +88,7 @@ module "tfc_environment" {
   agent_pool_id     = var.agent_pool_id
   config_directory  = local.config_file_path
   config_name       = each.key
+  filename_triggers = local.projects[each.key].triggers
   global_values     = local.projects[each.key].globals
   terraform_version = var.terraform_version
   projects          = local.projects[each.key].components
