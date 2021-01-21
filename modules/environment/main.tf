@@ -11,7 +11,7 @@ module "workspace" {
   file_triggers_enabled = true
   name                  = var.config_name
   organization          = var.organization
-  trigger_prefixes      = ["${var.config_directory}/${var.config_name}"]
+  trigger_prefixes      = ["${var.config_directory}/${var.config_name}.yaml"]
   vcs_repo              = var.vcs_repo
 }
 
