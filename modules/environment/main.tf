@@ -39,7 +39,7 @@ module "projects" {
   organization          = var.organization
   parent_workspace_id   = module.workspace.workspace.id
   project_name          = each.key
-  project_values        = each.value.vars
+  project_values        = try(each.value.vars, {})
   projects_path         = var.projects_path
   terraform_version     = try(each.value.terraform_version, var.terraform_version)
   vcs_branch_override   = try(each.value.vcs_branch_override, null)
