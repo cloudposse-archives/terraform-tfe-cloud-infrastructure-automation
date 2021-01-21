@@ -15,6 +15,12 @@ variable "config_directory" {
   description = "The name of the configuration directory to use in the trigger prefix."
 }
 
+variable "filename_triggers" {
+  type        = list(string)
+  description = "Controls which file(s) will trigger workspace executions."
+  default     = []
+}
+
 variable "global_values" {
   type        = map(any)
   default     = {}
