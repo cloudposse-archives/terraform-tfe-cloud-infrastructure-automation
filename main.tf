@@ -7,7 +7,7 @@ locals {
 }
 
 module "config_files" {
-  source   = "git::https://github.com/cloudposse/terraform-yaml-stack-config.git?ref=0.1.0"
+  source   = "git::https://github.com/cloudposse/terraform-yaml-stack-config.git?ref=0.5.0"
   for_each = local.config_filenames
 
   context = module.this.context
