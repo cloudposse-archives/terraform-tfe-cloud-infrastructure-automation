@@ -1,5 +1,6 @@
 locals {
   default_execution_mode = "remote"
+  environment_triggers = concat(["${var.config_directory}/${var.config_name}.yaml"], var.filename_triggers)
 }
 
 module "workspace" {
@@ -11,7 +12,7 @@ module "workspace" {
   file_triggers_enabled = true
   name                  = var.config_name
   organization          = var.organization
-  trigger_prefixes      = concat(["${var.config_directory}/${var.config_name}.yaml"], var.filename_triggers)
+  trigger_prefixes      = local.environment_triggers
   vcs_repo              = var.vcs_repo
 }
 
@@ -34,7 +35,7 @@ module "projects" {
   enabled               = try(each.value.workspace_enabled, false)
   environment           = module.workspace.workspace.name
   execution_mode        = try(each.value.execution_mode, local.default_execution_mode)
-  filename_triggers     = try(each.value.filename_triggers, [])
+  filename_triggers     = concat(local.environment_triggers, try(each.value.filename_triggers, []))
   global_values         = var.global_values
   organization          = var.organization
   parent_workspace_id   = module.workspace.workspace.id
