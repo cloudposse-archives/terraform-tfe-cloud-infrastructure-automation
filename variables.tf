@@ -28,6 +28,12 @@ variable "config_file_pattern" {
   default     = "*.yaml"
 }
 
+variable "config_directory" {
+  type        = string
+  default     = "config"
+  description = "The name of the configuration directory to use in the trigger prefix."
+}
+
 variable "organization" {
   type        = string
   description = "Name of the organization."
