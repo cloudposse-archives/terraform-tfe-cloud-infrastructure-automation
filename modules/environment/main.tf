@@ -42,4 +42,6 @@ module "projects" {
   parent_workspace_id   = module.workspace.workspace.id
   auto_apply            = try(each.value.auto_apply, false)
   filename_triggers     = try(each.value.filename_triggers, [])
+
+  context = module.this.context
 }

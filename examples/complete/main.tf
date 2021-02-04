@@ -17,4 +17,6 @@ module "example" {
     ingress_submodules = var.ingress_submodules
     oauth_token_id     = var.oauth_token_id
   }
+
+  context = module.this.context
 }
