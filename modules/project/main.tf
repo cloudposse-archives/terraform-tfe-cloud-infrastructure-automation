@@ -1,5 +1,10 @@
 locals {
   project_folder = coalesce(var.custom_project_folder, var.project_name)
+
+  trigger_prefixes = [
+    for prefix in var.filename_triggers :
+    "${var.projects_path}/${local.project_folder}/${prefix}"
+  ]
 }
 
 module "workspace" {
@@ -11,10 +16,12 @@ module "workspace" {
   file_triggers_enabled = true
   name                  = "${var.environment}-${var.project_name}"
   organization          = var.organization
-  trigger_prefixes      = ["${var.projects_path}/${local.project_folder}/${var.filename_trigger}"]
+  trigger_prefixes      = local.trigger_prefixes
   vcs_repo              = var.vcs_repo
+  vcs_branch_override   = var.vcs_branch_override
   working_directory     = "${var.projects_path}/${local.project_folder}"
   terraform_version     = var.terraform_version
+  execution_mode        = var.execution_mode
 }
 
 module "variables" {

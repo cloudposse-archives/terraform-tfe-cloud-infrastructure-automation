@@ -8,8 +8,9 @@ projects:
       workspace_enabled: true
       terraform_version: 0.13.4
       auto_apply: true
-      # Optional filename trigger to match (default is *.tf)
-      filename_trigger: "*.*"
+      # Optional filename triggers to match (default is *.tf)
+      filename_triggers:
+        - "*.*"
       triggers:
         - uw2-testing-example2
         - gbl-root-example1

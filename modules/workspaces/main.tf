@@ -4,7 +4,7 @@ resource "tfe_workspace" "this" {
 
   auto_apply            = var.auto_apply
   file_triggers_enabled = var.file_triggers_enabled
-  operations            = var.operations
+  execution_mode        = var.execution_mode
   queue_all_runs        = var.queue_all_runs
   ssh_key_id            = var.ssh_key_id
   terraform_version     = var.terraform_version
@@ -15,7 +15,7 @@ resource "tfe_workspace" "this" {
     for_each = lookup(var.vcs_repo, "identifier", "void") == "void" ? [] : [var.vcs_repo]
 
     content {
-      branch             = var.vcs_repo.branch
+      branch             = var.vcs_branch_override == null ? var.vcs_repo.branch : var.vcs_branch_override
       identifier         = var.vcs_repo.identifier
       ingress_submodules = var.vcs_repo.ingress_submodules
       oauth_token_id     = var.vcs_repo.oauth_token_id

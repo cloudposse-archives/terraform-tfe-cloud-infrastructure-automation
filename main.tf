@@ -24,7 +24,7 @@ locals {
     }
   ]...)
 
-  custom_triggers = merge(flatten([
+  custom_triggers = merge({}, flatten([
     for k, v in local.projects : [
       for project, settings in v.terraform : {
         for trigger in(try(settings.triggers, null) != null ? settings.triggers : []) :
@@ -49,6 +49,7 @@ module "tfc_config" {
   trigger_prefixes      = [basename(local.config_file_path)]
   vcs_repo              = var.vcs_repo
   working_directory     = "${var.projects_path}/${var.tfc_project_path}"
+  execution_mode        = "remote"
 }
 
 # Create our 2nd-tier environment workspaces, as well as our 3rd-tier project workspaces
@@ -57,12 +58,13 @@ module "tfc_environment" {
 
   for_each = local.projects
 
-  config_name   = each.key
-  global_values = each.value.globals
-  projects      = local.projects[each.key].terraform
-  projects_path = var.projects_path
-  organization  = var.organization
-  vcs_repo      = var.vcs_repo
+  config_name       = each.key
+  global_values     = each.value.globals
+  terraform_version = var.terraform_version
+  projects          = local.projects[each.key].terraform
+  projects_path     = var.projects_path
+  organization      = var.organization
+  vcs_repo          = var.vcs_repo
 
   context = module.this.context
 }
